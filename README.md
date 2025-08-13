@@ -1,2 +1,141 @@
-# NV_Rust
- 
+# NV/Rust
+
+Bienvenido al curso de Rust desde 0. En este curso vamos a partir desde lo más básico y luego especializarnos en ciertas áreas más específicas para poder ver cómo podemos aprovechar las ventajas que posee Rust en ciertos entornos.
+
+Lo recomendable, es iniciar con el primer bloque, y luego elegir el bloque que le interese más.
+
+Es recomendable también ya saber programar en algún lenguaje de programación antes de tomar el curso, pues en el curso se asume que se sabe algún lenguaje de antemano.
+
+# [Bloque 1: Fundamentos de Rust](./Bloque%201%20-%20Fundamentos%20de%20Rust/)
+
+## [Introducción](./Bloque%201%20-%20Fundamentos%20de%20Rust/1.1%20-%20Introducción/Introducción.md)
+1. Rust
+2. Instalación
+3. Compilador: `rustc` y `cargo`
+4. IDEs
+5. Hello World!
+
+## [Conceptos básicos](./Bloque%201%20-%20Fundamentos%20de%20Rust/1.2%20-%20Conceptos%20básicos/ConceptosBásicos.md)
+1. Variables y mutabilidad
+2. Tipos de datos
+3. Operaciones
+4. Input/Output
+5. Importaciones
+
+## Control de flujo
+1. Condicionales
+2. Bucles
+3. `break` y `continue`
+4. Funciones
+5. Bloques y alcance
+6. `match`
+7. `if let`
+
+## _Ownership_
+1. Reglas de propiedad
+2. Cadenas de texto
+3. Referencias y préstamos
+4. `slice`
+5. `lifetime`
+
+## Estructuras de datos
+1. Arreglos
+2. Tuplas
+3. `structs`
+4. Métodos
+5. `enums`
+6. `static` y `const`
+7. Vectores
+8. Hash Maps
+
+## Conceptos medios
+1. Paquetes, `crates` y módulos
+2. Errores (`panic!`)
+3. Manejo de errores
+4. Pruebas (`test`)
+5. Tipos de datos genéricos
+6. Traits
+7. Punteros inteligentes
+
+## Concurrencia, asincronía y macros
+1. Hilos
+2. Transferencia de información
+3. Programación asincrónica
+4. Macros
+
+# Bloque 2: Sistemas Embebidos y Críticos  
+*(Enfocado en bajo nivel, control de hardware y aplicaciones de tiempo real)*  
+## Entorno para embebidos
+1. `no_std` y ambientes sin OS  
+2. Target-specific compilation (ARM Cortex-M, RISC-V)  
+
+## Gestión de memoria avanzada  
+1. Allocators personalizados  
+2. Memory-mapped I/O  
+
+## Concurrencia en sistemas críticos 
+1. Interrupciones y manejadores (ISRs)  
+2. Sincronización atómica  
+
+## Abstracciones seguras de hardware  
+1. PAC (Peripheral Access Crates)  
+2. HAL (Hardware Abstraction Layer)  
+
+## Gestión de energía y optimización
+1. Low-power modes  
+2. Técnicas de optimización para recursos limitados  
+
+## Herramientas específicas
+1. `probe-rs`, `cargo-embed`  
+2. Debugging con GDB/OpenOCD  
+
+# Bloque 3: Criptografía y Blockchain  
+*(Uso de Rust para aplicaciones seguras y descentralizadas)*  
+
+## Fundamentos criptográficos  
+1. Primitivas: hashing (SHA, BLAKE3), cifrado simétrico (AES) 
+2. Criptografía de curva elíptica (ECC, Ed25519)  
+
+## Librerías clave  
+1. `ring`, `openssl`, `libsodium` bindings  
+2. `arkworks` para zk-SNARKs  
+
+## Blockchain fundamentals  
+1. Estructuras de datos: Merkle Trees, Patricia Tries  
+2. Consensos (PoW, PoS, PBFT)  
+
+## Desarrollo de Smart Contracts  
+1. Entornos: Solana (Anchor Framework), Polkadot (Substrate)  
+2. WASM en blockchains  
+
+## Seguridad avanzada
+1. Side-channel attacks mitigation  
+2. Formal verification (usando `kani`)  
+
+# Bloque 4: WebAssembly, Servidores y Backend  
+*(Rust para aplicaciones web y servicios escalables)*  
+
+## WebAssembly (WASM)  
+1. Compilación a WASM: `wasm-pack`, `wasm-bindgen` 
+2. Interoperabilidad JS/Rust  
+3. Frameworks: Yew, Leptos  
+
+## APIs y Servidores Web  
+1. HTTP servers: Axum, Actix Web, Rocket  
+2. Protocolos: REST, gRPC (con `tonic`)  
+
+## Concurrencia en backend  
+1. Async/Await avanzado  
+2. Gestión de conexiones: Connection pooling  
+
+## Persistencia de datos  
+1. ORMs: Diesel, SeaORM  
+2. NoSQL: Redis, MongoDB (con crates oficiales)  
+
+## Despliegue y escalabilidad
+1. Containers (Docker)  
+2. Serverless (AWS Lambda, Cloudflare Workers)  
+
+## Ecosistema Cloud
+1. Integración con Kubernetes  
+2. Observabilidad: Logging, métricas (OpenTelemetry)  
