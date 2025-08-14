@@ -25,11 +25,12 @@ Es recomendable también ya saber programar en algún lenguaje de programación 
 ## Control de flujo
 1. Condicionales
 2. Bucles
-3. `break` y `continue`
-4. Funciones
-5. Bloques y alcance
-6. `match`
-7. `if let`
+
+## Funciones y bloques
+1. Funciones
+2. Parámetros y retorno
+3. Bloques
+4. Alcance
 
 ## _Ownership_
 1. Reglas de propiedad
@@ -38,15 +39,18 @@ Es recomendable también ya saber programar en algún lenguaje de programación 
 4. `slice`
 5. `lifetime`
 
-## Estructuras de datos
+## Datos compuestos
 1. Arreglos
 2. Tuplas
-3. `structs`
-4. Métodos
-5. `enums`
-6. `static` y `const`
-7. Vectores
-8. Hash Maps
+4. `static` y `const`
+5. Vectores
+6. Hash Maps
+
+## Estructuras y Enums
+1. `structs`
+2. Métodos
+3. `enums`
+4. `match`
 
 ## Conceptos medios
 1. Paquetes, `crates` y módulos
