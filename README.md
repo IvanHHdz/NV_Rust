@@ -22,15 +22,14 @@ Es recomendable también ya saber programar en algún lenguaje de programación 
 4. Input/Output
 5. Importaciones
 
-## Control de flujo
+## [Control de flujo](./Bloque%201%20-%20Fundamentos%20de%20Rust/1.3%20-%20Control%20de%20flujo/ControlDeFlujo.md)
 1. Condicionales
 2. Bucles
 
 ## Funciones y bloques
 1. Funciones
 2. Parámetros y retorno
-3. Bloques
-4. Alcance
+3. Bloques y alcance
 
 ## _Ownership_
 1. Reglas de propiedad
