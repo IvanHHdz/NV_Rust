@@ -143,7 +143,7 @@ Como vimos anteriormente, la forma con la que se imprime información en pantall
 Es posible, al igual que en otros lenguajes de programación, añadir partes a estas cadenas de texto directamente. Por ejemplo, supongamos que queremos saludar directamente al usuario por su nombre, que conocemos y guardamos en la variable `nombre`:
 ```rust
 fn main(){
-    let nombre = String::from("Ferris");
+    let nombre = "Ferris";
     println!("Hola {}!", nombre);
 }
 ```
@@ -154,7 +154,7 @@ Hola Ferris!
 Que también podemos colocar dentro del texto, de manera similar a las cadenas de texto formateadas (`f"{}"`) de Python:
 ```rust
 fn main(){
-    let nombre = String::from("Ferris");
+    let nombre = "Ferris";
     println!("Hola {nombre}!");
 }
 ```

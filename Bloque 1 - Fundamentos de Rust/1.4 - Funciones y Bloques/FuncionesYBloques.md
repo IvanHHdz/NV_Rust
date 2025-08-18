@@ -103,3 +103,15 @@ fn main(){
     println!("{x}");        // imprime 23
 }
 ```
+
+Esto funciona precisamente por el alcance que tiene cada variable. En el ejemplo de reescritura la variable `x` solo existe dentro del bloque en donde se le asigna el valor `23`, fuera de dicho bloque existe con el valor de `3`. Lo mismo aplicaría si no es declarada afuera:
+```rust
+fn main(){
+    {
+        let x = 23;         // creamos la variable con su valor
+        println!("{x}");    // imprime 23
+    }                       // termina el bloque y x deja de existir
+    // si trataramos de imprimir la variable x, el compilador nos daría un error
+    // impidiéndonos compilar
+}
+```

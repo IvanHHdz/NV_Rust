@@ -26,24 +26,28 @@ Es recomendable también ya saber programar en algún lenguaje de programación 
 1. Condicionales
 2. Bucles
 
-## Funciones y bloques
+## [Funciones y bloques](./Bloque%201%20-%20Fundamentos%20de%20Rust/1.4%20-%20Funciones%20y%20Bloques/FuncionesYBloques.md)
 1. Funciones
 2. Parámetros y retorno
 3. Bloques y alcance
 
-## _Ownership_
+## [_Ownership_](./Bloque%201%20-%20Fundamentos%20de%20Rust/1.5%20-%20Ownership/Ownership.md)
 1. Reglas de propiedad
 2. Cadenas de texto
-3. Referencias y préstamos
-4. `slice`
-5. `lifetime`
+3. Mover
+4. Clonar y copiar
+5. Funciones
+6. Referencias y _borrowing_
+7. El compilador
 
 ## Datos compuestos
-1. Arreglos
-2. Tuplas
+1. Cadenas de Texto
+2. Arreglos
+3. Tuplas
 4. `static` y `const`
 5. Vectores
 6. Hash Maps
+7. `slice`
 
 ## Estructuras y Enums
 1. `structs`

@@ -109,7 +109,6 @@ fn main() {
 
 De igual forma, tenemos también el `break` y el `continue`:
 ```rust
-```rust
 fn main() {
     let mut num = 3;
 
