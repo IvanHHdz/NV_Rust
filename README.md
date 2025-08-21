@@ -21,6 +21,7 @@ Es recomendable también ya saber programar en algún lenguaje de programación 
 3. Operaciones
 4. Input/Output
 5. Importaciones
+6. `const`
 
 ## [Control de flujo](./Bloque%201%20-%20Fundamentos%20de%20Rust/1.3%20-%20Control%20de%20flujo/ControlDeFlujo.md)
 1. Condicionales
@@ -40,14 +41,13 @@ Es recomendable también ya saber programar en algún lenguaje de programación 
 6. Referencias y _borrowing_
 7. El compilador
 
-## Datos compuestos
+## [Datos compuestos](./Bloque%201%20-%20Fundamentos%20de%20Rust/1.6%20-%20Datos%20compuestos/DatosCompuestos.md)
 1. Cadenas de Texto
 2. Arreglos
 3. Tuplas
-4. `static` y `const`
-5. Vectores
-6. Hash Maps
-7. `slice`
+4. Vectores
+5. Hash Maps
+6. `slice`
 
 ## Estructuras y Enums
 1. `structs`
@@ -63,6 +63,8 @@ Es recomendable también ya saber programar en algún lenguaje de programación 
 5. Tipos de datos genéricos
 6. Traits
 7. Punteros inteligentes
+8. `unsafe`
+9. `static`
 
 ## Concurrencia, asincronía y macros
 1. Hilos
