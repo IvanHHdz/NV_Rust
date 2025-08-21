@@ -242,3 +242,17 @@ fn main(){
 Esto nos imprimirá un número aleatorio entre 1 y 100.
 
 La primera vez que lo ejecutemos con `cargo run` tardará un rato pues instalará `rand`. Después tardará lo usual.
+
+# `const`
+
+Al igual que en otros lenguajes, Rust posee constantes, que son datos que no cambiarán en el programa. Al igual que las variables son inmutables por defecto, con la diferencia que las constantes no se pueden volver mutables. Se declaran usando `const` en lugar de `let` y se debe de especificar su tipo al declararse.
+
+Pueden declararse en cualquier bloque, para que poseen cualquier alcance, aunque lo usual es declararlas con alcance global. 
+
+El valor de estas debe ser conocido en tiempo de compilación, lo que quiere decir que no puede ser el resultado de una expresión que requiera algún dato que se conozca solo en ejecución. 
+
+Ejemplo de constante:
+
+```rust
+const PI : f64 = 3.1415926;
+```
