@@ -63,15 +63,17 @@ Es recomendable también ya saber programar en algún lenguaje de programación 
 4. Pruebas (`test`)
 5. Tipos de datos genéricos
 6. Traits
-7. Punteros inteligentes
-8. `unsafe`
-9. `static`
 
 ## Concurrencia, asincronía y macros
 1. Hilos
 2. Transferencia de información
 3. Programación asincrónica
 4. Macros
+
+## Conceptos avanzados
+1. Punteros inteligentes
+2. `unsafe`
+3. `static`
 
 # Bloque 2: Sistemas Embebidos y Críticos  
 *(Enfocado en bajo nivel, control de hardware y aplicaciones de tiempo real)*  
