@@ -49,11 +49,12 @@ Es recomendable también ya saber programar en algún lenguaje de programación 
 5. Hash Maps
 6. `slice`
 
-## Estructuras y Enums
-1. `structs`
+## [Estructuras y Enums](./Bloque%201%20-%20Fundamentos%20de%20Rust/1.7%20-%20Estructuras%20y%20Enums/EstructurasYEnums.md)
+1. Estructuras
 2. Métodos
-3. `enums`
-4. `match`
+3. Enums
+4. Match
+5. `if let`
 
 ## Conceptos medios
 1. Paquetes, `crates` y módulos
