@@ -8,14 +8,14 @@ Es recomendable también ya saber programar en algún lenguaje de programación 
 
 # [Bloque 1: Fundamentos de Rust](./Bloque%201%20-%20Fundamentos%20de%20Rust/)
 
-## [Introducción](./Bloque%201%20-%20Fundamentos%20de%20Rust/1.1%20-%20Introducción/Introducción.md)
+## [Introducción](./Bloque%201%20-%20Fundamentos%20de%20Rust/1.0%20-%20Introducción/Introducción.md)
 1. Rust
 2. Instalación
 3. Compilador: `rustc` y `cargo`
 4. IDEs
 5. Hello World!
 
-## [Conceptos básicos](./Bloque%201%20-%20Fundamentos%20de%20Rust/1.2%20-%20Conceptos%20básicos/ConceptosBásicos.md)
+## [Conceptos básicos](./Bloque%201%20-%20Fundamentos%20de%20Rust/1.1%20-%20Conceptos%20básicos/ConceptosBásicos.md)
 1. Variables y mutabilidad
 2. Tipos de datos
 3. Operaciones
@@ -23,16 +23,16 @@ Es recomendable también ya saber programar en algún lenguaje de programación 
 5. Importaciones
 6. `const`
 
-## [Control de flujo](./Bloque%201%20-%20Fundamentos%20de%20Rust/1.3%20-%20Control%20de%20flujo/ControlDeFlujo.md)
+## [Control de flujo](./Bloque%201%20-%20Fundamentos%20de%20Rust/1.2%20-%20Control%20de%20flujo/ControlDeFlujo.md)
 1. Condicionales
 2. Bucles
 
-## [Funciones y bloques](./Bloque%201%20-%20Fundamentos%20de%20Rust/1.4%20-%20Funciones%20y%20Bloques/FuncionesYBloques.md)
+## [Funciones y bloques](./Bloque%201%20-%20Fundamentos%20de%20Rust/1.3%20-%20Funciones%20y%20Bloques/FuncionesYBloques.md)
 1. Funciones
 2. Parámetros y retorno
 3. Bloques y alcance
 
-## [_Ownership_](./Bloque%201%20-%20Fundamentos%20de%20Rust/1.5%20-%20Ownership/Ownership.md)
+## [_Ownership_](./Bloque%201%20-%20Fundamentos%20de%20Rust/1.4%20-%20Ownership/Ownership.md)
 1. Reglas de propiedad
 2. Cadenas de texto
 3. Mover
@@ -41,7 +41,7 @@ Es recomendable también ya saber programar en algún lenguaje de programación 
 6. Referencias y _borrowing_
 7. El compilador
 
-## [Datos compuestos](./Bloque%201%20-%20Fundamentos%20de%20Rust/1.6%20-%20Datos%20compuestos/DatosCompuestos.md)
+## [Datos compuestos](./Bloque%201%20-%20Fundamentos%20de%20Rust/1.5%20-%20Datos%20compuestos/DatosCompuestos.md)
 1. Cadenas de Texto
 2. Arreglos
 3. Tuplas
@@ -49,31 +49,33 @@ Es recomendable también ya saber programar en algún lenguaje de programación 
 5. Hash Maps
 6. `slice`
 
-## [Estructuras y Enums](./Bloque%201%20-%20Fundamentos%20de%20Rust/1.7%20-%20Estructuras%20y%20Enums/EstructurasYEnums.md)
+## [Estructuras y Enums](./Bloque%201%20-%20Fundamentos%20de%20Rust/1.6%20-%20Estructuras%20y%20Enums/EstructurasYEnums.md)
 1. Estructuras
 2. Métodos
 3. Enums
 4. Match
 5. `if let`
 
-## Conceptos medios
+## [Conceptos medios](./Bloque%201%20-%20Fundamentos%20de%20Rust/1.7%20-%20Conceptos%20medios/ConceptosMedios.md)
 1. Paquetes, `crates` y módulos
-2. Errores (`panic!`)
-3. Manejo de errores
-4. Pruebas (`test`)
-5. Tipos de datos genéricos
-6. Traits
+2. Manejo de errores
+3. Tipos de datos genéricos
+4. Traits
+5. Lifetime
+6. Pruebas (`test`)
 
-## Concurrencia, asincronía y macros
+## [Concurrencia y asincronía](./Bloque%201%20-%20Fundamentos%20de%20Rust/1.8%20-%20Concurrencia%20y%20asincronía/ConcurrenciaAsincronia.md)
 1. Hilos
 2. Transferencia de información
 3. Programación asincrónica
 4. Macros
 
-## Conceptos avanzados
-1. Punteros inteligentes
-2. `unsafe`
-3. `static`
+## [Conceptos avanzados](./Bloque%201%20-%20Fundamentos%20de%20Rust/1.9%20-%20Conceptos%20avanzados/ConceptosAvanzados.md)
+1. Programación Funcional
+2. Programación Orientada a Objetos
+3. Punteros inteligentes
+4. `unsafe`
+5. Macros
 
 # Bloque 2: Sistemas Embebidos y Críticos  
 *(Enfocado en bajo nivel, control de hardware y aplicaciones de tiempo real)*  
