@@ -94,6 +94,8 @@ Claro, esto no es exclusivo de Rust, pero tampoco es posible en lenguajes como C
 
 Y al igual que en otros lenguajes, podemos llegar a tener la necesidad de usar bucles. Rust tiene 3: `while`, `for` y `loop`.
 
+## `while`
+
 `while` funciona igual que en otros lenguajes como C++:
 ```rust
 fn main() {
@@ -146,6 +148,8 @@ fn main(){
 }
 ```
 
+## `for`
+
 En cuanto a `for`, es igual que en Python:
 ```rust
 fn main() {
@@ -159,6 +163,8 @@ fn main() {
 ```
 
 Y al igual que el `while`, es posible darles una etiqueta.
+
+## `loop`
 
 Y por último: el `loop`. Este es, básicamente, un `while true`. Lo que lo hace especial es su capacidad de retornar valores mediante `break`:
 ```rust

@@ -138,6 +138,8 @@ let despl_der = b >> 2; // 0b0011  (3)
 
 # Input/Output
 
+## Output
+
 Como vimos anteriormente, la forma con la que se imprime información en pantalla es por medio de la macro `println!()`, al mandar una cadena de texto como parámetro. 
 
 Es posible, al igual que en otros lenguajes de programación, añadir partes a estas cadenas de texto directamente. Por ejemplo, supongamos que queremos saludar directamente al usuario por su nombre, que conocemos y guardamos en la variable `nombre`:
@@ -159,6 +161,8 @@ fn main(){
 }
 ```
 Obteniendo el mismo resultado.
+
+## Input
 
 En cuanto a recibir input por parte del usuario. Necesitaremos primero hacer una importación de la librería estándar de Rust. 
 
