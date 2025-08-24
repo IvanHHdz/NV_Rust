@@ -57,7 +57,7 @@ Es recomendable también ya saber programar en algún lenguaje de programación 
 5. `if let`
 
 ## [Conceptos medios](./Bloque%201%20-%20Fundamentos%20de%20Rust/1.7%20-%20Conceptos%20medios/ConceptosMedios.md)
-1. Paquetes, `crates` y módulos
+1. Paquetes, crates y módulos
 2. Manejo de errores
 3. Tipos de datos genéricos
 4. Traits
