@@ -424,7 +424,183 @@ impl <T, U, V>  Point<T, U, V> {
 Y para aclarar, el uso de genéricos no afecta el rendimiento de nuestro programa ni su seguridad. El compilador se encargará de reemplazar nuestros genéricos por códio real para que se ejecute sin perder rendimiento. Al igual que verifica que no se pueda hacer nada no válido con los genéricos mediante traits.
 
 # Traits
-Cap. 10.2
+
+Los traits (rasgo) define las funcionalidades de un tipo de datos y como puede compartirlas con otros tipos.
+
+Estos pueden definir características, y cómo serán, para uno o varios tipos. Por ejemplo, imaginemos que tenemos dos estructuras: `Vegetal` y `Fruta`, y queremos que ambas sean "comestibles". Podemos crearles un trait para eso:
+```rust
+// definimos la estuctura Vegetal
+struct Vegetal {
+    nombre: String,
+}
+
+// definimos la estructura Fruta
+struct Fruta {
+    nombre: String,
+}
+
+// definimos el trait Comestible
+trait Comestible {
+    fn comer(&self);    // también podríamos hacer que retorne algo, igual que con las funciones
+}
+```
+
+Pero, hasta ahora solo lo estamos definiendo. Debemos implementarlo. Podemos lograrlo con `impl` de la siguiente manera:
+```rust
+impl Comestible for Vegetal {
+    fn comer(&self) {
+        println!("Has comido un vegetal llamado {}", self.nombre);
+    }
+}
+
+impl Comestible for Fruta {
+    fn comer(&self) {
+        println!("Has comido una fruta llamada {}", self.nombre);
+    }
+}
+```
+
+Y ahora podemos usar `.comer()` en ambas:
+```rust
+fn main(){
+    let zanahoria = Vegetal {nombre: "Zanahoria".to_string()};
+    zanahoria.comer();
+
+    let manzana = Fruta {nombre: "Manzana".to_string()};
+    manzana.comer();
+}
+/*
+    Has comido un vegetal llamado Zanahoria
+    Has comido una fruta llamada Manzana
+*/
+```
+
+De igual forma, podemos hacer que los traits tengan funciones por defecto. Por ejemplo, podemos hacer que siempre diga `"Has comido"`:
+```rust
+// definimos el trait
+trait Comestible {
+    fn comer(&self) {   // definimos la función
+        println!("Has comido");
+    }
+}
+
+impl Comestible for Vegetal {}  // implementamos el trait
+
+impl Comestible for Fruta {}    // implementamos el trait
+```
+
+Al igual que podemos tener varias funciones, hacer que se llamen entre sí incluso si no se sabe qué hará una de ellas:
+```rust
+// definimos el trait
+trait Comestible {
+    fn comer(&self) {   // definimos función comer
+        println!("Has comido {}", self.nombre());   // utilizamos el nombre que obtendremos, de alguna forma
+    }
+
+    // creamos la función para obtener el nombre
+    fn nombre(&self) -> String;
+}
+
+impl Comestible for Vegetal {
+    fn nombre(&self) -> String {    // definimos cómo obtenemos el nombre
+        self.nombre.clone()
+    }
+}
+
+impl Comestible for Fruta {
+    fn nombre(&self) -> String {    // definimos cómo obtenemos el nombre
+        self.nombre.clone()
+    }
+}
+```
+
+Gracias a los traits podemos definir funciones que puedan recibir parámetros de varios tipos siempre que tengan implementado dicho trait. Por ejemplo, podemos definir una función que utilize el trait `Comestible` de nuestro ejemplo:
+```rust
+fn hacer_jugo(item: &impl Comestible) {
+    println!("Has hecho jugo de {}", item.nombre());
+    item.comer();
+}
+```
+
+A esta forma de escribirlo se le llama sintaxis `impl Trait`.
+
+Y al llamarla:
+```rust
+fn main(){
+    let zanahoria = Vegetal {nombre: "Zanahoria".to_string()};
+    let manzana = Fruta {nombre: "Manzana".to_string()};
+
+    hacer_jugo(&zanahoria);
+    hacer_jugo(&manzana);
+}
+/*
+    Has hecho jugo de Zanahoria
+    Has comido Zanahoria
+    Has hecho jugo de Manzana
+    Has comido Manzana
+*/
+```
+
+Esto funciona gracias a que, al "pedir" como requisito para usarse en la función, el dato que entre tendrá tanto el método `.nombre()` como el `.comer()`. Por lo que podemos usar ambos dentro de la función.
+
+Esto también lo podemos escribir de manera más precisa usando la sintaxis _trait bound_:
+```rust
+fn hacer_jugo<T : Comestible> (item: &T) {
+    println!("Has hecho jugo de {}", item.nombre());
+    item.comer();
+}
+```
+Hará lo mismo.
+
+De igual forma podemos tener multiples traits como "requisitos" en una función. Por ejemplo, supongamos que queremos crear una función `funcion()` que necesite los traits de `Rasgo1` y `Rasgo2`. Entonces podemos tenerlo de las siguientes maneras:
+
+Sintaxis `impl Trait`:
+```rust
+fn funcion(item: &(impl Rasgo1 + Rasgo2)) -> () {
+```
+
+Sintaxis _trait bound_:
+```rust
+fn funcion<T: Rasgo1 + Rasgo2>(item: &T) -> () {
+```
+
+Alternativamente, también podemos usar un bloque `where` para escribir esto mismo, aunque es más usado cuando tenemos multiples datos genéricos. Por ejemplo, supongamos que tenemos una función llamada `funcion()` que recibe como parámetros dos datos genéricos `T` y `U`, de los cuales `T` debe tener los traits `Rasgo1` y `Rasgo2`, y `U` debe tener `Rasgo3` y `Rasgo4`. Podemos escribirlo como:
+```rust
+fn funcion<T: Rasgo1 + Rasgo2, U: Rasgo3 + Rasgo4>(t: &T, u: &U) -> () {
+```
+O usando `where`, que nos quedaría:
+```rust
+fn function<T, U>(t: &T, u: &U) -> ()
+where
+    T: Rasgo1 + Rasgo2,
+    U: Rasgo3 + Rasgo4,
+{
+```
+
+Esto no solo es válido para funciones, sino también podemos usarlo con `impl`, permitiendo que ciertos métodos solo se implementen si se tienen ciertos traits (por ejemplo, cuando se utilizan datos genéricos en una estructura) o con los mismos traits (hacer que una estructura con ciertos traits tenga tambien otros traits).
+
+Por último, retomando lo que habíamos dicho que retomaríamos de la función `promedio()`, quedaría así:
+```rust
+use std::ops::AddAssign;    // trait de uso de +=
+use std::convert::TryInto;  // trait de conversiones
+
+fn main(){
+    let arr = vec![14, 38, 20, 63, 38];
+    let mean = promedio(&arr);
+    println!("Promedio = {mean}.")
+}
+
+fn promedio<T> (list: &[T]) -> f64 
+where 
+    T: AddAssign + Copy + Into<f64>,
+{
+    let mut suma = 0.0;
+    for e in list {
+        suma += (*e).into();
+    }
+    suma / list.len() as f64
+}
+```
 
 # Lifetime
 Cap. 10.3
