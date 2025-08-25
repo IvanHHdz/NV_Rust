@@ -328,10 +328,100 @@ fn evaluar(x: f64) -> Result<f64, Errores> {
 
 El operador `?` funciona como si fuera un bazo del match, devuelve el valor o retorna el error.
 
-
-
 # Tipos de datos genéricos
-Cap. 10.1
+
+Como sabemos, Rust es estricto en los tipos, lo que significa que una función debe recibir como parámetros un tipo de dato específico y ningún otro tipo será válido. Pero hay ocasiones que esto no es muy rentable, ya que puede llegar a generar redundancia de código. Por ejemplo, imaginemos que tenemos una función que calcula el promedio de un arreglo de números:
+```rust
+fn main(){
+    let arr = vec![14, 38, 20, 63, 38];
+    let mean = promedio(&arr);
+    println!("Promedio = {mean}.")
+}
+
+fn promedio_i32(list: &[i32]) -> f64 {
+    let mut suma = 0;
+    for e in list {
+        suma += e;
+    }
+    suma as f64 / list.len() as f64
+}
+```
+Pero, ¿y si los datos no son `i32`, sino `u32`? Entonces la función sería:
+```rust
+fn promedio_u32(list: &[u32]) -> f64 {
+    let mut suma = 0;
+    for e in list {
+        suma += e;
+    }
+    suma as f64 / list.len() as f64
+}
+```
+
+¿Y si son `f64`? ¿O `i64`?, etc.
+
+Claro, esto no es buena idea, sería mejor poder ingresar muchos tipos a la vez. Después de todo, se hace lo mismo en todos los casos. En lenguajes de tipado débil, como Python, esto no es un problema. Pero en otros lenguajes, como C++ esto se soluciona por medio de datos genéricos, que representa muchos tipos a la vez. En C++ estos datos genéricos son las `template`, en Rust son los genéricos.
+
+De la siguiente manera:
+```rust
+fn promedio<T>(list: &[T]) -> f64 {
+```
+
+De momento esto no va a compilar, debido a que debemos implementar traits, que veremos más adelante. Retomaremos este ejemplo cuando veamos traits.
+
+Por otro lado, podemos también definir estructuras con datos genéricos, por ejemplo, una que tome coordenadas:
+```rust
+fn main() {
+    let punto_i32 = Point{x: 1, y: 2, z: 3};
+    let punto_u32: Point<u32, u32, u32> = Point{x: 1, y: 2, z: 3};
+    let punto_f64 = Point{x: 1.1, y: 2.2, z: 3.3};
+}
+
+// los datos genéricos serán T, U y V
+struct Point<T, U, V> {
+    x: T,
+    y: U,
+    z: V,
+}
+```
+
+Al igual que podemos tener enums de datos genéricos, y ya hemos visto y usado algunos. Por ejemplo `Option<T>` y `Result<T, E>`, ambos son enums con datos genéricos:
+```rust
+enum Option<T> {
+    Some(T),
+    None,
+}
+
+enum Result<T, E> {
+    Ok(T),
+    Err(E),
+}
+```
+
+Y de igual forma, si necesitamos crear métodos para estructuras o enums, necesitamos utilizar los datos genéricos con `impl`:
+```rust
+fn main() {
+    let punto_i32 = Point{x: 1, y: 2, z: 3};
+    let punto_u32: Point<u32, u32, u32> = Point{x: 1, y: 2, z: 3};
+    
+    let punto_f64 = Point{x: 1.1, y: 2.2, z: 3.3};
+    let (x, y, z) = punto_f64.extraer();
+    println!("El punto es ({x}, {y}, {z})");
+}
+
+struct Point<T, U, V> {
+    x: T,
+    y: U,
+    z: V,
+}
+
+impl <T, U, V>  Point<T, U, V> {
+    fn extraer(&self) -> (&T, &U, &V){
+        (&self.x, &self.y, &self.z)
+    }
+}
+```
+
+Y para aclarar, el uso de genéricos no afecta el rendimiento de nuestro programa ni su seguridad. El compilador se encargará de reemplazar nuestros genéricos por códio real para que se ejecute sin perder rendimiento. Al igual que verifica que no se pueda hacer nada no válido con los genéricos mediante traits.
 
 # Traits
 Cap. 10.2
