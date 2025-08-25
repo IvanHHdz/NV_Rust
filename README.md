@@ -68,7 +68,6 @@ Es recomendable también ya saber programar en algún lenguaje de programación 
 1. Hilos
 2. Transferencia de información
 3. Programación asincrónica
-4. Macros
 
 ## [Conceptos avanzados](./Bloque%201%20-%20Fundamentos%20de%20Rust/1.9%20-%20Conceptos%20avanzados/ConceptosAvanzados.md)
 1. Programación Funcional

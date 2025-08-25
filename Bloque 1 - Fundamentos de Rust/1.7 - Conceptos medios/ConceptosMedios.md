@@ -78,7 +78,257 @@ Al igual que otros lenguajes como Python, podemos utilizar `as` para renombrar i
 
 # Manejo de errores
 
-Cap. 9
+Una parte fundamental de desarrollar aplicaciones son los errores. Como mencionabamos [antes](../1.4%20-%20Ownership/Ownership.md), el compilador no solo es muy estricto, sino que es nuestro mejor amigo a la hora de buscar errores. Muchos errores se evitan gracias al compilador. Lastimosamente, muchos no es todos. Como en otros lenguajes de programación, se debe tener una forma de manejar estos errores. 
+
+En muchos lenguajes se tiene una forma sencilla de abordar los errores: excepciones. Cosas como bloques `try-catch` o `try-except` son muy usadas en otros lenguajes para manejar los errores de todo tipo. Sin embargo, en Rust no es así, pues para comenzar: en Rust no existen las excepciones.
+
+Rust reconoce dos tipos de errores: errores de los que se puede recuperar, y errores de los que no se puede recuperar (_recoverable_ y _unrecoverable_ respectivamente). Rust posee un tipo (`Result<T, E>`) para los que son recuperables y una macro (`panic!()`) para los que no son recuperables.
+
+## Errores irrecuperables
+
+En ocasiones nuestro programa puede llegar a fallar de forma tal que no hay nada que podeamos hacer para solucionarlo. Para tales casos Rust tiene el macro `panic!()`.
+
+```rust
+fn main() {
+    panic!("*se crashea*");
+}
+```
+
+Y si lo ejecutamos:
+```
+❯ ./test
+
+thread 'main' panicked at test.rs:2:5:
+*se crashea*
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+```
+
+Este mensaje nos indica dónde crasheó el programa (en inglés suelen utilizar el término _panicked_). El `test.rs:2:5` indica la parte exacta: archivo llamado `test.rs`, línea `2`, carácter `5`. Con el mensaje de error `"*se crashea*"`. Y si corremos el siguiente comando podremos ver más información que nos ayudará a saber qué salió mal:
+```shell
+RUST_BACKTRACE=1 cargo run
+```
+
+Usando cargo. 
+```
+thread 'main' panicked at src/main.rs:2:5:
+*se crashea*
+stack backtrace:
+   0: __rustc::rust_begin_unwind
+             at /builddir/build/BUILD/rust-1.89.0-build/rustc-1.89.0-src/library/std/src/panicking.rs:697:5
+   1: core::panicking::panic_fmt
+             at /builddir/build/BUILD/rust-1.89.0-build/rustc-1.89.0-src/library/core/src/panicking.rs:75:14
+   2: tests::main
+             at ./src/main.rs:2:5
+   3: core::ops::function::FnOnce::call_once
+             at /builddir/build/BUILD/rust-1.89.0-build/rustc-1.89.0-src/library/core/src/ops/function.rs:250:5
+note: Some details are omitted, run with `RUST_BACKTRACE=full` for a verbose backtrace.
+```
+
+## Errores recuperables
+
+Pero claro, lo mejor es tratar los errores de otra forma que no sea viéndolos crashear. Además, no todos los errores son tan fatales como para que el programa tenga que crashear si ocurren.
+
+Para estos casos, Rust tiene el enum `Result<E, T>`, definido de la siguiente manera:
+```rust
+enum Result<T, E> {
+    Ok(T),
+    Err(E),
+}
+```
+Donde `T` y `E` son datos genéricos (un poco más adelante los veremos a detalle), por lo que podemos hacer que sean distintos entre sí. `T` representa el valor correcto, mientras `E` es lo que retornaremos en caso que algo falle.
+
+Por ejemplo, podemos verificar que no se divida entre 0 de la siguiente manera:
+```rust
+fn main() {
+    let _resultado = dividir(1, 0); // probamos con 1/0
+    let resultado = dividir(1, 1);  // probamos con 1/1
+
+    match resultado {   // verificamos el resultado
+        Ok(r) => println!("El resultado es {r}."),
+        Err(_) => (),
+    }
+}
+
+fn dividir(a: i32, b: i32) -> Result<i32, ()> {
+    if b == 0 { // verificará si el denominador es 0, si lo es retornará
+        println!("Ha intentado dividir entre cero. Lo cual no es válido en nuestro sistema algebraico, y posiblemente en ningún otro. Le recomendamos no volverlo a intentar para evitar posibles consecuencias catastróficas.");
+        Err(()) // retorno "vacío"
+    }
+    else {
+        Ok(a / b)   // retorno en caso que sí sea válido
+    }
+}
+```
+
+Aquí la función `dividir()` verifica que no se divida entre 0. Si se trata de dividir entre 0, entonces devolverá un error. El enum `Result` nos ayuda a esto. A la hora de utilizar el resultado de la división deberemos verificar cómo quedó y "sacarlo" con un `match`. Esto ya que por defecto será un valor de tipo `Result<i32, ()>`, lo cual es útil para evitar errores, pero no es utilizable por sí solo, debemos sacarlo.
+
+También podemos personalizarlo más creando nuestros propios tipos de errores (o utilizando los que las librerías que utilizemos han creado), por ejemplo, supongamos que no vamos a permitir que el denominador sea negativo tampoco:
+```rust
+fn main() {
+    let resultado = dividir(1, 0); // probamos con 1/0
+    verificar(resultado);   // nos dirá que tratamos de dividir entre 0
+
+    let resultado = dividir(1, -1); // probamos con 1/-1
+    verificar(resultado);   // nos dirá que tratamos de dividir entre un negativo
+    
+    let resultado = dividir(1, 1);  // probamos con 1/1
+    verificar(resultado);   // nos dará el resultado
+}
+
+fn dividir(a: i32, b: i32) -> Result<i32, Errores> {    // retornaremos un tipo de error, si se da uno
+    if b == 0 {     // verificará si el denominador es 0, si lo es retornará
+        // no diremos nada aquí
+        Err(Errores::Divisor0) // retorno el error
+    }
+    else if b < 0 {
+        // retornaremos, pero no diremos nada
+        Err(Errores::DivisorNegativo)  // retorna el error
+    }
+    else {
+        Ok(a / b)   // retorno en caso que sí sea válido
+    }
+}
+
+// creamos un enum con los posibles casos
+enum Errores {
+    Divisor0,
+    DivisorNegativo
+}
+
+// haremos la verificación en una función para no tener que repetirla
+fn verificar(resultado: Result<i32, Errores>) {
+    match resultado {   // verificamos el resultado
+        Ok(r) => println!("El resultado es {r}."),
+        Err(error) => match error { // verificaremos el error
+            Errores::Divisor0 => println!("Ha intentado dividir entre cero. Lo cual no es válido en nuestro sistema algebraico, y posiblemente en ningún otro. Le recomendamos no volverlo a intentar para evitar posibles consecuencias catastróficas."),
+            Errores::DivisorNegativo => println!("Ha intentado dividir entre un negativo. Lo cual usualmente es válido, pero necesitabamos que no lo fuera en esta ocasión."),
+        },
+    }
+}   
+```
+
+Alternativamente, si no manejamos los errores de una forma tan específica, sino que queremos que el programa termine al conseguir un error (por ejemplo, que el programa termine si se trató de dividir entre 0) podemos usar simplificarlo tanto con `.unwrap()` como con `expect()`. Ambos métodos retornarán el valor, si el resultado salió bien (`Ok(E)`, retornará `E`) y si sale mal llama a `panic!()`.
+
+Con `.unwrap()`:
+```rust
+fn main() {
+    let resultado = dividir(1, 1).unwrap();  // probamos con 1/1
+    println!("El resultado es {resultado}");    // imprimirá "El resultado es 1"
+
+    let resultado = dividir(1, 0).unwrap(); // probamos con 1/0
+    // llamará a panic!()
+    println!("El resultado es {resultado}");
+
+}
+
+fn dividir(a: i32, b: i32) -> Result<i32, ()> {
+    if b == 0 { // verificará si el denominador es 0, si lo es retornará
+        Err(()) // retorno "vacío"
+    }
+    else {
+        Ok(a / b)   // retorno en caso que sí sea válido
+    }
+}
+```
+
+Con `.expect()`:
+```rust
+fn main() {
+    let resultado = dividir(1, 1)   // probamos con 1/0
+        .expect("Ha intentado dividir entre cero. Lo cual no es válido en nuestro sistema algebraico, y posiblemente en ningún otro. Le recomendamos no volverlo a intentar para evitar posibles consecuencias catastróficas."); 
+    println!("El resultado es {resultado}");
+
+    let resultado = dividir(1, 0)   // probamos con 1/0
+        .expect("Ha intentado dividir entre cero. Lo cual no es válido en nuestro sistema algebraico, y posiblemente en ningún otro. Le recomendamos no volverlo a intentar para evitar posibles consecuencias catastróficas."); 
+    // llamará también a panic!(), pero le dará un mensaje.
+    println!("El resultado es {resultado}");
+
+}
+
+fn dividir(a: i32, b: i32) -> Result<i32, ()> {
+    if b == 0 { // verificará si el denominador es 0, si lo es retornará
+        Err(()) // retorno "vacío"
+    }
+    else {
+        Ok(a / b)   // retorno en caso que sí sea válido
+    }
+}
+```
+
+Rust también posee un concepto muy cercano a la programación funcional para manejar errores que puedan ocurrir en distintas partes de distintas formas. Ese concepto es el de propagación de errores. Supongamos que tenemos una función que llama varias funciones que pueden fallar, la manera más sencilla de abordar esto es ir avanzando en el flujo del programa hasta que algo falle, momento en el que todo se retorna hasta el punto en que se llamó la función orinalmente, lugar donde se manejarán los errores. Por ejemplo, supongamos que deseamos crear un programa que evalúe la función $f(x) = \frac{1}{1 - \sqrt{x -1}}$, podemos programarlo de la siguiente forma tomando en cuenta su dominio $\forall x \in \mathbb{R} \;\text{s.t.}\; x\ge 1 \land x\neq 2$:
+```rust
+fn main() {
+    let x = -1.0;
+
+    let y = evaluar(x); // evaluará la función
+
+    // luego verificará si salió bien.
+    match y {
+        Ok(v) => println!("La función evaluada en {x} es {v}."),
+        Err(error) => {
+            match error {
+                Errores::RaizNegativa => println!("Ha intentado calcular la raíz de un número negativo, lo cual no es posible en nuestro plano actual (los reales)."),
+                Errores::Denominador0 => println!("Ha intentado dividir entre 0, lo cual no es válido en este, ni en ningún otro sistema algebraico coherente.")
+            }
+        }
+    }
+}
+
+// creamos un enum con los posibles errores
+enum Errores {
+    Denominador0,
+    RaizNegativa,
+}
+
+// esta función evaluará la función
+// 1/(1 - sqrt(x - 1))
+fn evaluar(x: f64) -> Result<f64, Errores> {
+    let raiz = raiz(x - 1.0);   // calculará la parte de la raíz primero
+    let division = match raiz { // verificará que no haya fallado la raíz
+        Ok(r) => dividir(1.0, 1.0 - r), // si todo está bien dividirá 
+        Err(e) => Err(e)    // si algo salió mal, retornará el error
+    };
+
+    division    // retornará la división
+    // la división puede, o no, ser exitosa
+    // eso lo verifica el main
+} 
+
+// esta función evaluará la raíz
+fn raiz(x: f64) -> Result<f64, Errores> {
+    if x >= 0.0 {
+        Ok(x.sqrt())
+    }
+    else {
+        Err(Errores::RaizNegativa)
+    }
+}
+
+// esta función divide
+fn dividir(a: f64, b: f64) -> Result<f64, Errores> {
+    if b == 0.0 {
+        Err(Errores::Denominador0)
+    }
+    else {
+        Ok(a/b)
+    }
+}
+```
+
+La ventaja de hacerlo de esta manera es la capacidad que nos otorga para reutilizar ciertas partes de nuestro código (cosa muy común en Programación Funcional) pues hay funciones (como `raiz()` o `dividir()`) que pueden ser fácilmente reutilizadas pues son bastante generales.
+
+Como la propagación de errores es algo muy común en Rust, tenemos también una forma de simplificarlo utilizando el operador `?` que ayuda a propagar los errores de manera automática. Por ejemplo, podemos reescribir la función `evaluar()` de la siguiente manera:
+```rust
+fn evaluar(x: f64) -> Result<f64, Errores> {
+    let raiz = raiz(x - 1.0)?;
+    let division = dividir(1.0, 1.0 - raiz)?;
+    Ok(division)
+} 
+```
+
+El operador `?` funciona como si fuera un bazo del match, devuelve el valor o retorna el error.
+
+
 
 # Tipos de datos genéricos
 Cap. 10.1
