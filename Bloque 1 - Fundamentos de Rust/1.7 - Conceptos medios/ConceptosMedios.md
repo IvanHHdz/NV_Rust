@@ -603,7 +603,143 @@ where
 ```
 
 # Lifetime
-Cap. 10.3
+Lifetime (tiempo de vida) de una variable se refiere al la sección de código en el que dicha variable es válida. Es algo que ya hemos estado usando, aunque no de manera explícita, ya que al igual que con los tipos, Rust puede inferir el lifetime de las variables. El detalle está en que, al igual que con los tipos, existen situaciones en las que el compilador no podrá inferir correctamente, por lo que deberemos de declararlo explícitamente.
+
+## _Borrow Checker_
+Vamos a comenzar explicando que es el _borrow checker_. Este es una herramienta que posee el compilador para verificar que todas las referencias que se realizen dentro de un programa sean válidas y no llegen a apuntar a valores indefinidos (pues Rust no tiene valores nulos). Para entender mejor cómo funciona, veamos el siguiente ejemplo:
+```rust
+fn main() {
+    let r;                // ---------+-- 'a
+                          //          |
+    {                     //          |
+        let x = 5;        // -+-- 'b  |
+        r = &x;           //  |       |
+    }                     // -+       |
+                          //          |
+    println!("r: {r}");   //          |
+}                         // ---------+
+```
+
+En este caso, el lifetime de `r` es `'a` y el de `x` es `'b`. Podemos observar que hay un espacio en el que solo está `r`, sin valor. Luego aparece `x`, y `r` hace referencia a `x`. Por lo que `r` tiene valor, pero solo mientras esté en el lifetime `'b`. Al salir de ese lifetime, `r` no tiene valor pues no puede apuntar a `x` por que ya no existe. Así que no puede usarse `println!("r: {r}");` por que `r` no posee valor alguno. Razón por la cual el compilador nos impedirá compilar esto.
+
+Esto se soluciona si extendemos el lifetime de `x` hasta donde `r` lo necesita. Por ejemplo:
+```rust
+fn main() {
+    let x = 5;            // ----------+-- 'b
+                          //           |
+    let r = &x;           // --+-- 'a  |
+                          //   |       |
+    println!("r: {r}");   //   |       |
+                          // --+       |
+}                         // ----------+
+```
+
+## _Function Signatures_
+
+Con lo anterior claro, pongamos el siguiente ejemplo. Supongamos que compara dos Strings y retorna la que va primero alfabéticamente. Esto es sincillo de lograr, por ejemplo:
+```rust
+fn main() {
+    // creamos las Strings
+    let s1 = String::from("Impacto");
+    let s2 = String::from("Elemento");
+
+    // creamos una slice que haga referencia a la primera
+    let primero = if s1 > s2 {
+            &s2
+        }
+        else {
+            &s1
+        };
+
+    // imprimimos
+    println!("La primera entre \"{s1}\" y \"{s2}\" es: \"{primero}\"");
+    /*
+        La primera entre "Impacto" y "Elemento" es: "Elemento"
+    */
+}
+```
+
+Pero, habíamos dicho que queríamos que fuera una función, así que vamos a programarla:
+```rust
+fn primero(s1: &str, s2: &str) -> &str {
+    if s1 > s2 {
+        &s2
+    }
+    else {
+        &s1
+    }
+}
+```
+Parece correcto, es lo mismo que teníamos. Así que debería funcionar. ¿No? No, no compilará. Esto debido a que la referencia que retornará la función tiene lifetime indefinido. Rust no sabe qué lifetime tendrá, dónde termina ni cuando deja de ser válido. Y el mayor problema es que, teóricamente, nosotros tampoco sabemos.
+
+Para solucionar esto, Rust introduce las anotaciones de lifetime, las cuales son lifetime genéricas. Lo que haremos es indicar que el valor de retorno poseerá un lifetime que termina donde termina el primer lifetime de los parámetros. Es decir, terminará donde termine el primero. Esto lo hacemos de la siguiente manera:
+```rust
+fn primero<'a> (s1: &'a str, s2: &'a str) -> &'a str {
+    if s1 > s2 {
+        &s2
+    }
+    else {
+        &s1
+    }
+}
+```
+
+De esta forma estamos diciendo que el lifetime de retorno será la intersección de los lifetimes de ambos parámetros. El ejemplo completo nos quedaría de la siguiente forma:
+```rust
+fn main() {
+    // creamos las Strings
+    let s1 = String::from("Impacto");
+    let s2 = String::from("Elemento");
+
+    // creamos llamamos la función
+    let primero = primero(&s1, &s2);
+
+    // imprimimos
+    println!("La primera entre \"{s1}\" y \"{s2}\" es: \"{primero}\"");
+    /*
+        La primera entre "Impacto" y "Elemento" es: "Elemento"
+    */
+}   // aquí termina el lifetime de s1 y s2. por lo que también termina el de 'a
+
+// declaramos la función
+fn primer<'a> (s1: &'a str, s2: &'a str) -> &'a str {
+    if s1 > s2 {
+        &s2
+    }
+    else {
+        &s1
+    }
+}
+```
+
+Hay que tener en consideración lo que dijimos antes, que solo es la **intersección**. Veamoslo mejor en el siguiente ejemplo:
+```rust
+fn main() {
+    // creamos la String
+    let s1 = String::from("Impacto");
+    let primero: &str;
+
+    {
+        // creamos la String
+        let s2 = String::from("Elemento");
+
+        // creamos llamamos la función
+        let primero = primer(&s1, &s2);
+    }   // aquí termina el lifetime de s2, por lo que el de 'a también termina aunque el de s1 siga
+
+    // imprimimos
+    println!("La primera es: \"{primero}\"");
+}   // aquí termina el lifetime de s1 
+```
+
+Este código no compilará, ya que se estará tratando de llamar un valor cuando su lifetime ya terminó. Lo cual el _borrow checker_ detectará.
+
+Esto mismo, al igual que con los datos genéricos, funciona igual con las estructuras, enums, métodos, etc., siguiendo siempre el mismo patrón. Por ejemplo, para estructuras:
+```rust
+struct Estructura<'a> {
+    cadena: &'a str,
+}
+```
 
 # Pruebas (`test`)
 Cap. 11
