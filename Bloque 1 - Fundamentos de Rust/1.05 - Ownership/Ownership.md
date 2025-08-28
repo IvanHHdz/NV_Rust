@@ -19,9 +19,7 @@ Las **reglas de propiedad** son las siguientes:
 
 Nos hemos saltado explícitamente las cadenas de texto para poder explicar con ellas las reglas de propiedad de mejor manera, pues en estas se reflejan con gran claridad. Esto debido a que es un tipo de dato más complejo que los vistos [anteriormente](../1.2%20-%20Conceptos%20básicos/ConceptosBásicos.md). La diferencia principal es el hecho que su tamaño es conocido en tiempo de compilación, lo que permite guardarlos en la `stack` de la memoria y realizar copias de los mismos con facilidad. Esto no es así con las cadenas de texto (que entre otras cosas, se guardan en la `heap` de la memoria).
 
-En esta parte nos enfocaremos únicamente en los aspectos de las cadenas de texto que tienen relación con las reglas de propiedad, pues estos mismos principios aplican a otros tipos de datos complejos (aquellos que no vimos [anteriormente](../1.2%20-%20Conceptos%20básicos/ConceptosBásicos.md)). Más adelante volveremos a profundizar las cadenas de texto.
-
-Primero que nada, hay que mencionar que en Rust existen dos tipos de cadenas de texto: `&str` y `String`.
+En esta parte nos enfocaremos únicamente en los aspectos de las cadenas de texto que tienen relación con las reglas de propiedad, pues estos mismos principios aplican a otros tipos de datos complejos (aquellos que no vimos [anteriormente](../1.2%20-%20Conceptos%20básicos/ConceptosBásicos.md)). Más adelante volveremos a profundizar las cadenas de texto. Primero que nada, hay que mencionar que en Rust existen dos tipos de cadenas de texto: `&str` y `String`.
 
 Una `&str` es como las vistas [anteriormente](../1.2%20-%20Conceptos%20básicos/ConceptosBásicos.md), cadenas de texto literales, que son inmutables:
 ```rust
@@ -131,7 +129,9 @@ Debería compilar, ¿no?
 
 No, no compilará. Esto debido a que no funciona igual que antes. Las `String`, como mencionabamos antes, son tipos de datos complejos, por lo que no se hace así.
 
-Imaginémoslo así: en memoria, existe un lugar donde están los datos que representan una cadena de texto `"Ferris"`. Al crear la variable `s1` obtenemos un puntero que señala a la posición de `"Ferris"` en memoria, por lo que podemos decir que `s1` es propietaria de `"Ferris"`. Al crear segunda variable `s2` se crea otro puntero que señala a `"Ferris"`. Suena lógico y sencillo, sin embargo, hay un problema: según las reglas de propiedad, un valor no puede tener dos propietarios, y aquí tenemos un valor (`"Ferris"`) con dos propietarios (`s1` y `s2`). La solución es sencilla: le quitamos a `s1` la propiedad que tiene sobre `"Ferris"` y se la damos a `s2`, a esta acción se le llama **mover**. Pero, si `s2` tiene la propiedad de `"Ferris"`, y `s1` ha perdido propiedad sobre el valor que tenía... ¿Qué pasará cuando lea `s1`? Un error. `s1` no puede ser leída porque ha dejado de existir, o por lo menos dejó de tener el valor y propiedad sobre `"Ferris"`. Por lo que:
+Imaginémoslo así: en memoria, existe un lugar donde están los datos que representan una cadena de texto `"Ferris"`. Al crear la variable `s1` obtenemos un puntero que señala a la posición de `"Ferris"` en memoria, por lo que podemos decir que `s1` es propietaria de `"Ferris"`. Al crear segunda variable `s2` se crea otro puntero que señala a `"Ferris"`. Suena lógico y sencillo, sin embargo, hay un problema: según las reglas de propiedad, un valor no puede tener dos propietarios, y aquí tenemos un valor (`"Ferris"`) con dos propietarios (`s1` y `s2`). La solución es sencilla: le quitamos a `s1` la propiedad que tiene sobre `"Ferris"` y se la damos a `s2`, a esta acción se le llama **mover**. Pero, si `s2` tiene la propiedad de `"Ferris"`, y `s1` ha perdido propiedad sobre el valor que tenía... ¿Qué pasará cuando lea `s1`? Un error. `s1` no puede ser leída porque ha dejado de existir, o por lo menos dejó de tener el valor y propiedad sobre `"Ferris"`. 
+
+Por lo que:
 ```rust
 fn main() {
     let s1 = String::from("Ferris");    // creamos s1, con propiedad sobre "Ferris"
@@ -256,7 +256,6 @@ fn main(){
 
     // mostramos el tamaño y la String
     println!("{s1} tiene un tamaño de: {size}");
-
 }
 
 fn lenght(s : String) -> (i32, String) {
