@@ -89,7 +89,7 @@ Es recomendable también ya saber programar en algún lenguaje de programación 
 2. _Unsafe_
 3. Macros
 
-# Proximamente
+# Próximamente
 ```markdown
 # Bloque 2: Sistemas Embebidos y Críticos  
 > *(Enfocado en bajo nivel, control de hardware, entornos sin sistema operativo, y aplicaciones de tiempo real.)*  
