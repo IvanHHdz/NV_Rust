@@ -90,7 +90,7 @@ Es recomendable también ya saber programar en algún lenguaje de programación 
 3. Macros
 
 # Proximamente
-```
+```markdown
 # Bloque 2: Sistemas Embebidos y Críticos  
 > *(Enfocado en bajo nivel, control de hardware, entornos sin sistema operativo, y aplicaciones de tiempo real.)*  
 
