@@ -176,7 +176,6 @@ impl Comestible for Fruta {
     }
 }
 ```
-
 Gracias a los traits podemos definir funciones que puedan recibir parámetros de varios tipos siempre que tengan implementado dicho trait. Por ejemplo, podemos definir una función que utilize el trait `Comestible` de nuestro ejemplo:
 ```rust
 fn hacer_jugo(item: &impl Comestible) {
@@ -184,7 +183,6 @@ fn hacer_jugo(item: &impl Comestible) {
     item.comer();
 }
 ```
-
 A esta forma de escribirlo se le llama sintaxis `impl Trait`. Y al llamarla:
 ```rust
 fn main(){
@@ -262,6 +260,12 @@ where
 }
 ```
 
+Como dato extra, es posible implementar traits de forma automática (algunos) de la siguiente forma:
+```rust
+#[derive(PartialEq, Copy, Clone)]    // este implementaría artialEq, Copy, Clone
+// aquí colocaríamos la estructura o enum que implementaría dichos traits
+```
+
 # Lifetime
 Lifetime (tiempo de vida) de una variable se refiere al la sección de código en el que dicha variable es válida. Es algo que ya hemos estado usando, aunque no de manera explícita, ya que al igual que con los tipos, Rust puede inferir el lifetime de las variables. El detalle está en que, al igual que con los tipos, existen situaciones en las que el compilador no podrá inferir correctamente, por lo que deberemos de declararlo explícitamente.
 
@@ -295,7 +299,6 @@ fn main() {
 ```
 
 ## _Function Signatures_
-
 Con lo anterior claro, pongamos el siguiente ejemplo. Supongamos que compara dos Strings y retorna la que va primero alfabéticamente. Esto es sincillo de lograr, por ejemplo:
 ```rust
 fn main() {
@@ -349,10 +352,8 @@ fn main() {
     // creamos las Strings
     let s1 = String::from("Impacto");
     let s2 = String::from("Elemento");
-
     // creamos llamamos la función
     let primero = primero(&s1, &s2);
-
     // imprimimos
     println!("La primera entre \"{s1}\" y \"{s2}\" es: \"{primero}\"");
     /*
@@ -377,7 +378,6 @@ fn main() {
     // creamos la String
     let s1 = String::from("Impacto");
     let primero: &str;
-
     {
         // creamos la String
         let s2 = String::from("Elemento");

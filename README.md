@@ -4,11 +4,11 @@ Bienvenido al curso de Rust desde 0. En este curso vamos a partir desde lo más 
 
 Lo recomendable, es iniciar con el primer bloque, y luego elegir el bloque que le interese más.
 
-Es recomendable también ya saber programar en algún lenguaje de programación antes de tomar el curso, pues en el curso se asume que se sabe algún lenguaje de antemano.
+Es recomendable también ya saber programar en algún lenguaje de programación antes de tomar el curso, pues en el curso se asume que se sabe algún lenguaje de antemano. Lo ideal sería que tenga experiencia programando en C++ y Python (lenguajes que se harán referencias para ejemplificar a lo largo del curso), aunque otros lenguajes también están bien. No se recomienda para aprender a programar como primer lenguaje.
 
 # [Bloque 1: Fundamentos de Rust](./Bloque%201%20-%20Fundamentos%20de%20Rust/)
 >_(Rust Vanilla)_
-
+>
 > Basado en:
 > [_The Rust Programming Language_](https://doc.rust-lang.org/book/title-page.html)
 
@@ -74,7 +74,7 @@ Es recomendable también ya saber programar en algún lenguaje de programación 
 ## [Pruebas](./Bloque%201%20-%20Fundamentos%20de%20Rust/1.11%20-%20Pruebas/Pruebas.md)
 1. Pruebas (_tests_)
 
-## [Paradigmas de programación](./Bloque%201%20-%20Fundamentos%20de%20Rust/1.12%20-%20Paradígmas%20de%20Programación/PradígmasDeProgramación.md)
+## [Paradigmas de programación](./Bloque%201%20-%20Fundamentos%20de%20Rust/1.12%20-%20Paradigmas%20de%20Programación/PradigmasDeProgramación.md)
 1. Programación Funcional
 2. Programación Orientada a Objetos
 
@@ -89,10 +89,16 @@ Es recomendable también ya saber programar en algún lenguaje de programación 
 2. _Unsafe_
 3. Macros
 
+## Proyecto
+> _(Aplicación de línea de comandos en Rust)_
+>
+> Basado en:
+> [_Command Line Applications in Rust_](https://rust-cli.github.io/book/index.html)
+
 # Próximamente
 ```markdown
 # Bloque 2: Sistemas Embebidos y Críticos  
-> *(Enfocado en bajo nivel, control de hardware, entornos sin sistema operativo, y aplicaciones de tiempo real.)*  
+> _(Enfocado en bajo nivel, control de hardware, entornos sin sistema operativo, y aplicaciones de tiempo real.)_
 
 > Basado en:
 > [_The Embedded Rust Book_](https://docs.rust-embedded.org/book/)
@@ -109,4 +115,10 @@ Es recomendable también ya saber programar en algún lenguaje de programación 
 
 > Basado en:
 > [_Comprehensive Rust_](https://google.github.io/comprehensive-rust/index.html)
+
+# Bloque 5: Librerías para Python  
+> _(Desarrollo de librerías para Python desde Rust con PyO3)_
+
+> Basado en:
+> [_PyO3 user guide_](https://pyo3.rs/v0.26.0/index.html)
 ```
