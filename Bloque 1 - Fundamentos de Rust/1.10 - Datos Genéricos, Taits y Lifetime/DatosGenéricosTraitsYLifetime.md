@@ -101,12 +101,10 @@ Los traits (rasgo) define las funcionalidades de un tipo de datos y como puede c
 struct Vegetal {
     nombre: String,
 }
-
 // definimos la estructura Fruta
 struct Fruta {
     nombre: String,
 }
-
 // definimos el trait Comestible
 trait Comestible {
     fn comer(&self);    // también podríamos hacer que retorne algo, igual que con las funciones
@@ -259,6 +257,8 @@ where
     suma / list.len() as f64
 }
 ```
+
+Esto mismo no solo es válido para funciones, sino para cualquier parte en donde sea válido el uso de datos genéricos, como estructuras, enums, métodos, etc.
 
 Como dato extra, es posible implementar traits de forma automática (algunos) de la siguiente forma:
 ```rust
