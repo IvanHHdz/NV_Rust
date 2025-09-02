@@ -197,4 +197,72 @@ Otro método muy útil es `.filter()` el cual funciona de manera similar a `.map
 
 # Programación Orientada a Objetos
 
-Cap. 18
+Como mencionábamos, Rust posee características de multiples paradigmas de programación. Además del paradigma funcional, Rust tiene multiples características provenientes del paradigma de Programación Orientada a Objetos. 
+
+En pocas palabras, este paradigma consiste en organizar el código en objetos (instancias de clases) que combinan datos y métodos. Sus principios son encapsulamiento, herencia, polimorfismo y abstracción, para un código modular y reutilizable.
+
+A continuación, vamos a ver cómo Rust aplica algunos de estos principios.
+
+## Encapsulación
+
+Un concepto común en todos los lenguajes orientados a objetos es el del encapsulamiento. Lo que significa que los detalles de implementación de un objeto no son accesibles al código que utiliza ese objeto, por lo que la única forma de interactuar con el mismo es por medio de API pública.
+
+Esto lo logra Rust por medio de `pub`. Las propiedades y métodos de una estructura o enum son privadas por defecto y debemos volverlas públicas utilizando `pub`.
+
+Por ejemplo, si creamos un módulo como lo hicimos en la sección de [paquetes](../1.09%20-%20Paquetes%20y%20Manjeo%20de%20Errores/PaquetesYManejoDeErrores.md), debemos hacer las funciones, enums y estructuras públicas para poder usarlas. Y de la misma forma, debemos hacer públicos los métodos y atributos para poder acceder a ellos.
+
+Ejemplo:
+```rust
+use crate::modulo::Caja;
+
+fn main(){
+    let mi_caja = Caja::nueva(1.2, 4.2, 6.4, "Rojo".to_string());
+    mi_caja.mostrar();
+}
+
+// creamos un modulo de ejemplo
+mod modulo {
+    // ejemplo de una función privada
+    fn saludar(){
+        println!("Hola!");
+    }
+    // ejemplo de una función pública
+    pub fn saludar_mundo(){
+        println!("Hola Mundo!");
+    }
+    // la estructura es púbica, pero sus atributos privados
+    pub struct Caja {
+        contenido: Vec<String>,
+        size: (f64, f64, f64),
+        color: String
+    }  
+    impl Caja {
+        // solo se pueden crear instancias por medio de este método, ya que solo este es púbico
+        pub fn nueva (largo: f64, ancho: f64, alto: f64, color: String) -> Caja {
+            Caja {
+                contenido: Vec::new(),
+                size: (largo, ancho, alto),
+                color
+            }
+        }
+        // la única forma de ver el contenido de la caja,  es por medio de este método
+        pub fn mostrar (&self){
+            println!("Contenido: {0:?}", self.contenido);
+            println!("Dimensiones: {0:?}", self.size);
+            println!("Color: {}", self.color);
+        }
+    }
+}
+```
+
+## Herencia y Polimorfismo
+
+De acuerdo con _The Book_, la herencia es un mecanismo mediante el cual un objeto puede heredar elementos de la definición de otro, obteniendo así datos y comportamiento del objeto padre.
+
+En Rust, esto no es posible.
+
+Lo más cercano es el uso de traits con implementaciones por defecto.
+
+Lo mismo ocurre con el polimorfismo, que puede hacerse algo parecido haciendo uso de datos genéricos y traits para hacer lo que algunos llaman _bounded parametric polymorphism_.
+
+Tanto los traits como el uso de datos genericos fueron temas que vimos [anteriormente](../1.10%20-%20Datos%20Genéricos,%20Taits%20y%20Lifetime/DatosGenéricosTraitsYLifetime.md).
