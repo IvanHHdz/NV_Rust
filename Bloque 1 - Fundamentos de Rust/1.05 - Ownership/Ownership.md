@@ -1,10 +1,10 @@
 # Reglas de propiedad (_Ownership_)
 
-El _Ownership_ o las reglas de propiedad son la característica más única de Rust, teniendo multiples implicaciones profundas en todo el lenguaje. Es gracias a estas reglas que Rust es capaz de manejar la memoria de manera segura sin necesidad de un recolector de basura (_garbage collector_) como lo hacen lenguajes como C++. Razón por la cual entender bien el _ownership_ es **fundamental** en Rust. 
+El _Ownership_ o las reglas de propiedad son la característica más única de Rust, teniendo multiples implicaciones profundas en todo el lenguaje. Es gracias a estas reglas que Rust es capaz de manejar la memoria de manera segura sin necesidad de un recolector de basura (_garbage collector_) como lo hacen lenguajes como Python y Java. Razón por la cual entender bien el _ownership_ es **fundamental** en Rust. 
 
 Pero, ¿Qué es el _Ownership_? Se trata de un conjunto de reglas que dictan cómo Rust interactua con la memoria. 
 
-Como mencionábamos antes, esta es una forma distinta a como lo hacen el resto de lenguajes. La mayoría utiliza un recolector de basura para deshechar aquella memoria que no se necesite más; otros es el programador quien debe encargarse de asignar y liberar explícitamente la memoria que utiliza.
+Como mencionábamos antes, esta es una forma distinta a como lo hacen el resto de lenguajes. La mayoría utiliza un recolector de basura para deshechar aquella memoria que no se necesite más (e.g. Python); otros es el programador quien debe encargarse de asignar y liberar explícitamente la memoria que utiliza (e.g. C).
 
 Rust utiliza el _ownership_: un conjunto de reglas de propiedad que se verifican al momento de compilar el programa, y a menos que todas las reglas se cumplan, el progama no compilará.
 
@@ -70,7 +70,7 @@ Pero, ¿Por qué existe esta diferencia? ¿Por qué las `String` pueden mutar mi
 
 Para entenderlo mejor, tenemos que entender la manera en que se guardan dichos datos en memoria. Como mencionábamos antes, mientras las cadenas de texto literal se guardan en el `stack` de la memoria, las `String` se guardan en el `heap`. Esto debido a que mientras las cadenas de texto literal sabemos en tiempo de compilación el tamaño que tendrán en cualquier parte de nuestro código, las `String` no. El hecho que no sepamos qué tamaño tendrán  hace necesario que se almecenen en el `heap` de la memoria, permitiendo que puedan ser mutables. Pero esto tiene ciertas implicaciones: debemos solicitar y liberar la memoria que usamos.
 
-Solicitarla no es complicado, lo hacemos, por ejemplo, al ejecutar `String::from()`. Pero liberarla sí requiere mayor análisis. En muchos lenguajes, incluído C++ por ejemplo, se tiene un recolector de basura (_garbage collector_) que se encarga de revisar periódicamente y liberar aquella memoria que ya no se utilice. En otros lenguajes es tarea del programador, quien debe tener cuidado de liberar la memoria (o desperdiciaría memoria al no liberarla), no llamarla antes de tiempo (por que ocasionaría problemas si llamara a una variable que ya eliminó) ni llamarla dos veces (¡más problemas aún!).
+Solicitarla no es complicado, lo hacemos, por ejemplo, al ejecutar `String::from()`. Pero liberarla sí requiere mayor análisis. En muchos lenguajes, incluído C# por ejemplo, se tiene un recolector de basura (_garbage collector_) que se encarga de revisar periódicamente y liberar aquella memoria que ya no se utilice. En otros lenguajes, como C, es tarea del programador, quien debe tener cuidado de liberar la memoria (o desperdiciaría memoria al no liberarla), no llamarla antes de tiempo (por que ocasionaría problemas si llamara a una variable que ya eliminó) ni llamarla dos veces (¡más problemas aún!).
 
 Rust trabaja distinto. [Antes](../1.4%20-%20Funciones%20y%20Bloques/FuncionesYBloques.md) hablamos de los alcances de variables y los bloques. Rust se encarga de liberar la memoria que utiliza cierta variable una vez se sale del alcance de la misma. Esto, de manera automática llamando una función llamada `drop()` al cerrar las llaves:
 
