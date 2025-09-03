@@ -78,16 +78,18 @@ Es recomendable también ya saber programar en algún lenguaje de programación 
 1. Programación Funcional
 2. Programación Orientada a Objetos
 
-## [Concurrencia y asincronía](./Bloque%201%20-%20Fundamentos%20de%20Rust/1.13%20-%20Concurrencia%20y%20Asincronía/ConcurrenciaAsincronia.md)
+## [Punteros Inteligentes](./Bloque%201%20-%20Fundamentos%20de%20Rust/1.13%20-%20Punteros%20Inteligentes/PunterosInteligentes.md)
+1. Punteros Inteligentes
+
+## [Concurrencia y asincronía](./Bloque%201%20-%20Fundamentos%20de%20Rust/1.14%20-%20Concurrencia%20y%20Asincronía/ConcurrenciaAsincronia.md)
 1. _Fearless Concurrency_
 2. Hilos
 3. Transferencia de información
 4. Programación asincrónica
 
-## [Conceptos avanzados](./Bloque%201%20-%20Fundamentos%20de%20Rust/1.14%20-%20Conceptos%20Avanzados/ConceptosAvanzados.md)
-1. Punteros inteligentes
-2. _Unsafe_
-3. Macros
+## [Conceptos avanzados](./Bloque%201%20-%20Fundamentos%20de%20Rust/1.15%20-%20Conceptos%20Avanzados/ConceptosAvanzados.md)
+1. _Unsafe_
+2. Macros
 
 ## Proyecto
 > _(Aplicación de línea de comandos en Rust)_

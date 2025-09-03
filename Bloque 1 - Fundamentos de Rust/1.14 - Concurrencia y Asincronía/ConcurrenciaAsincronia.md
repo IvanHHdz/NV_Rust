@@ -128,6 +128,7 @@ fn main() {
         // si no llega nada, se bloquea esperando
         // mientras que un Err() si deja de existir o ser válido todo productor tx
         // también existe .try_recv() que hace exactamente lo mismo, con la diferencia que no esperará
+        // retorna Err(TryRecvError::Empty) si la cola estaba vacía y Err(TryRecvError::Disconnected) si ya no hay emisores
         // lo que lo vuelve útil por si el hilo receptor tiene más cosas por hacer.
         println!("Hola {usuario}!");
     });
@@ -210,9 +211,36 @@ Como dato curioso, podemos simplificar el consumidor usando `for`:
     });
 ```
 
-# Concurrencia
+# Exclusión mutua
 
-Cap. 16.3 y 16.4
+La exclusión mutua, abreviada como _mutex_, consiste en un mecanismo que asegura que ciertos datos solo sean accesibles por un hilo a la vez. Esto es un mecanismo clásico para poder compartir memoria entre hilos (o procesos en general). Para ello, cada hilo que trate de acceder a la variable necesita asegurarse que nadie más la está usando, y luego bloquearla, para que nadie más pueda usarla; una vez termina, debe desbloquearla, para que otros puedan usarla.
+
+Veamos cómo se utiliza en Rust con un ejemplo de un solo hilo (el principal):
+```rust
+use std::sync::Mutex;
+
+fn main() {
+    // creamos un Mutex<T> con new()
+    let game = Mutex::new(String::from("Hollow Knight"));   // en este caso será Mutex<String>
+
+    // podemos imprimirlo
+    println!("Actualmente jugando: {game:?}");  // Actualmente jugando: Mutex { data: "Hollow Knight", poisoned: false, .. }
+
+    {
+        // a continuación, el hilo (el principal y único) se bloquea hasta que le toca usar el Mutex
+        // devuelve un LockResult<MutexGuard<T>>
+        // dará un error si, por alguna razón, un hilo que tenía este mutex cracheó (panicked)
+        // en cuyo caso se dice que el mutex está "envenenado" (poisoned)
+        let mut usuario = game.lock().unwrap();
+        *usuario = String::from("Portal");
+    }   // cuando llegamos aquí, el MutexGuard se asegura que el mutex vuelva a estar bloqueado
+        // esto lo logra por ser un puntero inteligente 
+
+    println!("Actualmente jugando: {game:?}");  // Actualmente jugando: Mutex { data: "Portal", poisoned: false, .. }
+}
+```
+
+
 
 # Programación asincrónica
 
