@@ -97,7 +97,7 @@ Es recomendable también ya saber programar en algún lenguaje de programación 
 > Basado en:
 > [_Command Line Applications in Rust_](https://rust-cli.github.io/book/index.html)
 
-# Próximamente
+# Bloques en progreso
 ```markdown
 # Bloque 2: Sistemas Embebidos y Críticos  
 > _(Enfocado en bajo nivel, control de hardware, entornos sin sistema operativo, y aplicaciones de tiempo real.)_
