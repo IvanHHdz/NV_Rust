@@ -1,14 +1,18 @@
 fn main() {
     let mut arbol: Nodo<i32> = Nodo::nuevo(20);
 
-    println!("Agregamos 23, 13, 7, 16");
+    let datos = [1, 4, 21, 6, 21, 23, 24, 3, 13, 5, 17, 4, 9, 32, 5];
+    println!("Agregamos datos : {datos:?}");
 
-    arbol.agregar(23);
-    arbol.agregar(13);
-    arbol.agregar(7);
-    arbol.agregar(16);
+    for ele in datos {
+        arbol.agregar(ele);
+    }
 
-    dbg!(&arbol);
+    let arbolito = arbol.recorrer();
+    println!("{arbolito:?}");
+    
+    let valor = arbol.buscar(&23);
+    println!("23 {valor}")
 }
 
 #[derive(Debug, PartialEq)]
@@ -43,8 +47,35 @@ impl <T: PartialOrd> Nodo<T> {
                 if valor < *nodo {
                     rama_izq.agregar(valor);
                 }
-                else {
+                else if valor > *nodo {
                     rama_der.agregar(valor);
+                }
+            }
+        }
+    }
+
+    fn recorrer(&self) -> Vec<&T> {
+        let mut arbol: Vec<&T> = Vec::new();
+        match self {
+            Nodo::Hoja => arbol,
+            Nodo::Rama { nodo, rama_izq, rama_der } => {
+                arbol.extend(rama_izq.recorrer());
+                arbol.push(nodo);
+                arbol.extend(rama_der.recorrer());
+                arbol
+            }
+        }
+    }
+
+    fn buscar(&self, dato: &T) -> bool {
+        match self {
+            Nodo::Hoja => false,
+            Nodo::Rama { nodo, rama_izq, rama_der } => {
+                if nodo == dato{
+                    true
+                }
+                else {
+                    rama_izq.buscar(dato) || rama_der.buscar(dato)
                 }
             }
         }
