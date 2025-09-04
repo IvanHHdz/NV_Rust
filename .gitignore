@@ -1,0 +1,16 @@
+# Archivos generados por Cargo
+prueba/target/
+
+# Archivos de caché o temporales
+**/*.rs.bk
+**/*.swp
+*.log
+.rustc_info.json
+
+# Archivos de IDEs o editores
+.idea/
+.vscode/
+*.iml
+
+# Otros archivos temporales
+.DS_Store
