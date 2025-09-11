@@ -235,3 +235,262 @@ fn main(){
     println!("Después del drop!");
 }
 ```
+
+# `Rc<T>`
+
+Hasta el momento, hemos visto que cada valor tiene un propietario. Esto, en general, es así. Sin embargo, existen casos muy específicos en los cuales se vuelve necesario o útil es hecho que un mismo dato pueda tener multiples propietarios. Para lograr esto, utilizamos el puntero `Rc<T>` (por _reference counting_). Este puntero mantiene un seguimiento de las referencias que se hacen a un dato, para que, si no quedan más referencias, se libere el dato.
+
+Por ejemplo, veamos el siguiente ejemplo. Imaginemos que tenemos tres ciudades: Ciudad A, Ciudad B y Ciudad C. Las ciudades C y B conectan con la ciudad A por medio de caminos: la ciudad A no conecta con nadie. Podemos vizualizarlo de la siguiente manera: 
+```rust
+use std::rc::Rc;    // importamos Rc<T>
+
+fn main(){
+    // creamos la ciudad A
+    let ciudad_a = Rc::new(Ciudad::nueva("A".to_string(), Camino::NoCamino));   // no tiene caminos
+    println!("Contador de referencias = {}", Rc::strong_count(&ciudad_a));      // imprimimos las referencias, solo tiene una (la de la variable ciudad_a)
+
+    // creamos la ciudad B
+    let ciudad_b = Rc::new(Ciudad::nueva("B".to_string(), Camino::CaminoHacia(Rc::clone(&ciudad_a))));  // esta conecta con la ciudad A
+    println!("Contador de referencias = {}", Rc::strong_count(&ciudad_a));      // volvemos a imprimir las referencias, ahora son 2
+    
+    {   // podemos hacer esto dentro de bloques
+        // creamos la ciudad C
+        let ciudad_c = Rc::new(Ciudad::nueva("C".to_string(), Camino::CaminoHacia(Rc::clone(&ciudad_a))));  // esta también conecta con la ciudad A
+        println!("Contador de referencias = {}", Rc::strong_count(&ciudad_a));      // imprimimos una vez más las referencias, ahora son 3
+    }
+    
+    // si verificamos fuera del bloque, notaremos que ahora solo son 2 referencias, ya que la tercera (que era de ciudad_c) ya no es válida, pues estamos fuera de su alcance
+    println!("Contador de referencias = {}", Rc::strong_count(&ciudad_a));
+    
+}
+
+// enum para los caminos
+enum Camino {
+    NoCamino,
+    CaminoHacia(Rc<Ciudad>)
+}
+
+// estructura para las ciudades
+struct Ciudad {
+    nombre: String, // cada ciudad tiene un nombre
+    camino: Camino  // y un camino
+}
+
+// la función para crear ciudades
+impl Ciudad {
+    fn nueva(nombre: String, camino: Camino) -> Self{
+        Self { 
+            nombre, 
+            camino 
+        }
+    }
+}
+```
+
+Es importante mencionar que estas son referencias inmutables. Así que, ¿cómo hacemos para crear referencias mutables de este estilo?
+
+# `RefCell<T>`
+
+Para lograr implementar multiples referencias mutables primero necesitamos analizar porqué no funcionará hacerlo con `Rc<T>`. Veamos el siguiente ejemplo (no compila):
+```rust
+use std::rc::Rc;    // importamos Rc<T>
+
+fn main(){
+    // creamos la ciudad A
+    let ciudad_a = Rc::new(Ciudad::nueva("A".to_string(), Camino::NoCamino));   // no tiene caminos
+    println!("Contador de referencias = {}", Rc::strong_count(&ciudad_a));      // imprimimos las referencias, solo tiene una (la de la variable ciudad_a)
+
+    // creamos la ciudad B
+    let ciudad_b = Rc::new(Ciudad::nueva("B".to_string(), Camino::CaminoHacia(Rc::clone(&ciudad_a))));  // esta conecta con la ciudad A
+    println!("Contador de referencias = {}", Rc::strong_count(&ciudad_a));      // volvemos a imprimir las referencias, ahora son 2
+        
+    ciudad_b.mostrar();     // La ciudad B tiene un camino hacia A.
+
+    // queremos cambiar el nombre de ambas ciudades
+    ciudad_a.nombre = "París".to_string();
+    ciudad_b.nombre = "Roma".to_string();
+
+    ciudad_b.mostrar();     // queremos que imprima: "La ciudad Roma tiene un camino hacia París."
+}
+
+// enum para los caminos
+#[derive(Debug)]
+enum Camino {
+    NoCamino,
+    CaminoHacia(Rc<Ciudad>)
+}
+
+// estructura para las ciudades
+#[derive(Debug)]
+struct Ciudad {
+    nombre: String, // cada ciudad tiene un nombre
+    camino: Camino  // y un camino
+}
+
+// la función para crear ciudades
+impl Ciudad {
+    fn nueva(nombre: String, camino: Camino) -> Self{
+        Self { 
+            nombre, 
+            camino 
+        }
+    }
+
+    // implementamos una función para mostrar
+    fn mostrar(&self) {
+        let camino = match &self.camino {
+            Camino::NoCamino => &"ninguna parte".to_string(),
+            Camino::CaminoHacia(ciudad) => &(ciudad.nombre)
+        };
+        println!("La ciudad {} tiene un camino hacia {}.", self.nombre, camino);
+    }
+}
+```
+
+Nos dirá, entre otras cosas: `cannot mutate immutable variable 'ciudad_a'`. Esto ocurre debido a que el compilador de rust es incapaz de asegurar que lo que tratamos de hacer es válido, debido a las reglas del _ownership_. Y agregarle `mut` a la declaración de la variable tampoco funcionará, pues no implementa mutabilidad. Entonces, ¿qué hacemos?
+
+Para solucionar esto, debemos de utilizar un puntero que nos ayudará a _mutar una variable inmutable_, esto por medio de _Interior mutability_, lo cual nos permite mutar datos incluso si estos tienen referencias inmutables (como sabemos, esto no está permitido por defecto). Para lograrlo, utiliza lo llamado `unsafe`, una opción avanzada que veremos más adelante, la cual nos permite, por así decirlo, tomar la responsabilidad que tiene el compilador de verificar el código, de forma que el compilador no intervendrá. Esto puede ocasionar muchos problemas si se utiliza mal, o ayudar a crear cosas que serían imposibles (como esto) de otra forma.
+
+Este puntero es `RefCell<T>`. Veamos cómo implementarlo:
+```rust
+use std::{cell::RefCell, rc::Rc};    // importamos Rc<T> y RefCell<T>
+
+fn main(){
+    // creamos la ciudad A
+    let ciudad_a = Rc::new(Ciudad::nueva("A".to_string(), Camino::NoCamino));   // no tiene caminos
+    println!("Contador de referencias = {}", Rc::strong_count(&ciudad_a));      // imprimimos las referencias, solo tiene una (la de la variable ciudad_a)
+
+    // creamos la ciudad B
+    let ciudad_b = Rc::new(Ciudad::nueva("B".to_string(), Camino::CaminoHacia(Rc::clone(&ciudad_a))));  // esta conecta con la ciudad A
+    println!("Contador de referencias = {}", Rc::strong_count(&ciudad_a));      // volvemos a imprimir las referencias, ahora son 2
+        
+    ciudad_b.mostrar();     // La ciudad B tiene un camino hacia A.
+
+    // queremos cambiar el nombre de ambas ciudades
+    *ciudad_a.nombre.borrow_mut() = "París".to_string();    // debemos de utilizar el método .borrow_mut() para la referencia mutable
+    *ciudad_b.nombre.borrow_mut() = "Roma".to_string();     // que desreferenciamos para editar su valor
+
+    ciudad_b.mostrar();     // queremos que imprima: "La ciudad Roma tiene un camino hacia París."
+    // ahora sí lo imprime
+}
+
+// enum para los caminos
+#[derive(Debug)]
+enum Camino {
+    NoCamino,
+    CaminoHacia(Rc<Ciudad>)
+}
+
+// estructura para las ciudades
+#[derive(Debug)]
+struct Ciudad {
+    // hay que recordar que debemos cambiar su tipo
+    nombre: RefCell<String>, // cada ciudad tiene un nombre
+    camino: Camino  // y un camino
+}
+
+// la función para crear ciudades
+impl Ciudad {
+    fn nueva(nombre: String, camino: Camino) -> Self{
+        Self { 
+            // hay que modificar esta parte para crear nuevos
+            nombre: RefCell::new(nombre), 
+            camino 
+        }
+    }
+
+    fn mostrar(&self) {
+        let camino = match &self.camino {
+            Camino::NoCamino => &"ninguna parte".to_string(),
+            Camino::CaminoHacia(ciudad) => &(*ciudad.nombre.borrow())   // para imprimirlo, debemos tomarlo prestado
+        };
+        println!("La ciudad {} tiene un camino hacia {}.", self.nombre.borrow(), camino);
+    }
+}
+```
+
+# `Weak<T>`
+
+Es posible que haya notado una cosa curiosa, y mala, de los punteros `Rc<T>`: la posibilidad de pérdida de memoria por culpa de ellos mismos. La razón es el hecho que la memoria de estos punteros no será liberada hasta que el contador de referencias (`Rc::strong_count()`) se vuelva 0. El problema es que haciendo uso también de `RefCell<T>` nos es posible crear referencias cíclicas. Es decir, un nodo `A` que apunta a un nodo `B`; y este nodo `B` apunta al nodo `A`. De esta forma ninguno de los dos nodos será eliminado, pues su contador no llegará a 0.
+
+Esto no lo podrá detectar el compilador, por lo que es nuestra tarea solucionarlo.
+
+Una forma de evitar este tipo de cosas es haciendo uso de una herramienta: otro puntero. Este puntero es `Weak<T>`. Veamos un ejemplo:
+```rust
+use std::{cell::RefCell, rc::Rc};   // importaciones necesarias
+
+fn main(){
+    // crearemos un nodo A
+    let a = Rc::new(RefCell::new(Nodo {
+        valor: "Nodo A".to_string(),
+        hacia: None
+    }));
+
+    // crearemos un nodo B que apuntará a A
+    let b = Rc::new(RefCell::new(Nodo {
+        valor: "Nodo B".to_string(),
+        hacia: Some(Rc::clone(&a))
+    }));
+
+    // ambos serán punteros que pueden apuntar a multiples datos y ser mutables
+    
+    dbg!(&b);
+
+    dbg!(&a);                   // estos dos son iguales
+    dbg!(&b.borrow().hacia);    // es decir, apuntan a lo mismo
+    // por lo que podemos decir que podemos acceder a A desde B
+}
+
+#[derive(Debug)]
+struct Nodo {
+    valor: String,
+    hacia: Option<Rc<RefCell<Nodo>>>,
+}
+```
+
+Sin embargo, si hacemos que `A` apunte de la misma forma a `B`, crearemos una referencia cíclica, y no queremos eso. Entonces utilizaremos un puntero `Weak<T>` para esto:
+```rust
+use std::{cell::RefCell, rc::{Rc, Weak}};  // importaciones necesarias
+
+fn main(){
+    // crearemos el nodo A
+    let a = Rc::new(RefCell::new(Nodo {
+        valor: "Nodo A".to_string(),
+        hacia: None,    // no apunta a nadie
+        desde: None     // nadie lo apunta
+    }));
+    // creamos el nodo B
+    let b = Rc::new(RefCell::new(Nodo {
+        valor: "Nodo B".to_string(),
+        hacia: Some(Rc::clone(&a)), // apunta hacia A, con strong reference, por lo que tiene ownership
+        desde: None                 // nadie apunta hacia B
+    }));
+    
+    // ahora haremos que A diga que B lo apunta
+    // primero, debemos de tomar una referencia mutable
+    // y acceder a su propiedad .desde
+    // para asignarle el valor de B
+    // como es un Option<T>, debemos usar Some()
+    // y para no crear referencias cíclicas, usamos una weak reference 
+    // esto lo hacemos con Rc::downgrade()
+    a.borrow_mut().desde = Some(Rc::downgrade(&b));
+
+    // si imprimimos, veremos que se crearon las referencias correctamente
+    dbg!(&a);
+    dbg!(&b.borrow().hacia);
+
+    dbg!(&b);
+    if let Some(desde) = a.borrow().desde.as_ref().and_then(|w| w.upgrade()) {
+        dbg!(&desde);
+    } else {
+        println!("a.desde es None");
+    }   // claro que acceder a .desde es un poco más complicado y requiere más cuidado
+}
+
+#[derive(Debug)]
+struct Nodo {
+    valor: String,
+    hacia: Option<Rc<RefCell<Nodo>>>,
+    desde: Option<Weak<RefCell<Nodo>>>
+}
+```
