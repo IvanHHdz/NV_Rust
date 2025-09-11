@@ -80,6 +80,12 @@ Es recomendable también ya saber programar en algún lenguaje de programación 
 
 ## [Punteros Inteligentes](./Bloque%201%20-%20Fundamentos%20de%20Rust/1.13%20-%20Punteros%20Inteligentes/PunterosInteligentes.md)
 1. Punteros Inteligentes
+2. `Box<T>`
+3. `Deref`
+4. `Drop`
+5. `Rc<T>`
+6. `RefCell<T>`
+7. `Weak<T>`
 
 ## [Concurrencia y asincronía](./Bloque%201%20-%20Fundamentos%20de%20Rust/1.14%20-%20Concurrencia%20y%20Asincronía/ConcurrenciaAsincronia.md)
 1. _Fearless Concurrency_
