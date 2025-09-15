@@ -87,13 +87,17 @@ Es recomendable también ya saber programar en algún lenguaje de programación 
 6. `RefCell<T>`
 7. `Weak<T>`
 
-## [Concurrencia y asincronía](./Bloque%201%20-%20Fundamentos%20de%20Rust/1.14%20-%20Concurrencia%20y%20Asincronía/ConcurrenciaAsincronia.md)
+## [Concurrencia](./Bloque%201%20-%20Fundamentos%20de%20Rust/1.14%20-%20Concurrencia/Concurrencia.md)
 1. _Fearless Concurrency_
 2. Hilos
 3. Transferencia de información
-4. Programación asincrónica
+4. Exclusión mutua
+5. Extendiendo concurrencia
 
-## [Conceptos avanzados](./Bloque%201%20-%20Fundamentos%20de%20Rust/1.15%20-%20Conceptos%20Avanzados/ConceptosAvanzados.md)
+## [Asincronía](./Bloque%201%20-%20Fundamentos%20de%20Rust/1.15%20-%20Asincronía/Asincronía.md)
+1. 
+
+## [Conceptos avanzados](./Bloque%201%20-%20Fundamentos%20de%20Rust/1.16%20-%20Conceptos%20Avanzados/ConceptosAvanzados.md)
 1. _Unsafe_
 2. Macros
 

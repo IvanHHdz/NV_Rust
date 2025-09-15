@@ -233,15 +233,131 @@ fn main() {
         // en cuyo caso se dice que el mutex está "envenenado" (poisoned)
         let mut usuario = game.lock().unwrap();
         *usuario = String::from("Portal");
-    }   // cuando llegamos aquí, el MutexGuard se asegura que el mutex vuelva a estar bloqueado
+    }   // cuando llegamos aquí, el MutexGuard se asegura que el mutex vuelva a estar desbloqueado
         // esto lo logra por ser un puntero inteligente 
 
     println!("Actualmente jugando: {game:?}");  // Actualmente jugando: Mutex { data: "Portal", poisoned: false, .. }
 }
 ```
 
+Es importante notar que `Mutex<T>` es un puntero inteligente. Al utilizar `.lock()` obtenemos un puntero de tipo `LockResult<MutexGuard<T>>` el cual sacamos con `.unwrap()` para tener el puntero `MutexGuard<T>`, que implementa `Deref` (por eso usamos `*` para actualizarlo) y también `Drop` (que desbloque la variable automáticamente).
 
+Ahora, probemos hacerlo con multiples hilos, probaremos con un problema sencillo: crearemos 10 hilos, que imprimirán y sumaran en una variable global.
+```rust
+// importaciones
+use std::sync::Mutex;
+use std::thread;
 
-# Programación asincrónica
+fn main(){
+    let contador = Mutex::new(0);   // cramos la variable global
+    let mut hilos = vec![];         // esto nos servirá para aplicar .join() a todos los hilos
 
-Cap. 17
+    for _ in 0..10{     // 10 hilos
+        let hilo = thread::spawn(move || {          // creamos los hilos
+            let mut c = contador.lock().unwrap();   // creamos la variable para .lock()   
+            println!("Mensaje del hilo #{}", *c);   // imprimimos
+            *c += 1;                                // y cambiamos el valor
+        });
+        hilos.push(hilo);                           // guardamos el hilo
+    }   
+    // aquí usamos .join() en todos
+    for hilo in hilos {
+        hilo.join().unwrap();
+    }
+    // imprimimos el valor final
+    println!("Se ejecutaron los {} hilos correctamente.",*contador.lock().unwrap())
+}
+```
+
+Pero, hay un problema: no compila. Esto debido a que estamos moviendo la variable globan dentro del primer hilo, por lo que se pierde en la primera iteración. En lugar de hacer eso, vamos a utilizar crear multiples punteros que puedan tener propiedad sobre la variable global con `Rc<T>`:
+```rust
+// importaciones
+use std::sync::Mutex;
+use std::thread;
+use std::rc::Rc;
+
+fn main(){
+    let contador = Rc::new(Mutex::new(0));  // cramos la variable global
+    let mut hilos = vec![];                 // esto nos servirá para aplicar .join() a todos los hilos
+
+    for _ in 0..10{     // 10 hilos
+        let contador_individual = Rc::clone(&contador);         // aquí la variable individual que apunta a la global
+        let hilo = thread::spawn(move || {                      // creamos los hilos
+            let mut c = contador_individual.lock().unwrap();    // creamos la variable para .lock()   
+            println!("Mensaje del hilo #{}", *c);               // imprimimos
+            *c += 1;                                            // y cambiamos el valor
+        });
+        hilos.push(hilo);                                       // guardamos el hilo
+    }   
+    // aquí usamos .join() en todos
+    for hilo in hilos {
+        hilo.join().unwrap();
+    }
+    // imprimimos el valor final
+    println!("Se ejecutaron los {} hilos correctamente.",*contador.lock().unwrap())
+}
+```
+
+Pero seguirá sin funcionar. Esto debido a que `Rc<T>` no puede garantizar que se envíe información entre hilos de manera segura. Para hacerlo, debería tener el trait `Send`.
+
+Por suerte, existe un puntero que es prácticamente igual a nuestro `Rc<T>`, con la diferecia que sí funciona para esto, ya que implementa `Send`. Es el puntero `Arc<T>` (la _A_ es por _Atomic_, es decir: _Atomic Reference Counted_).
+
+## Atomic Reference Counted
+
+Pero ¿porqué hay dos tipos que hacen prácticamente lo mismo? ¿no sería mejor solo tener uno? Son preguntas válidas, el motivo es porque `Rc<T>` no implementa ni necesita implementar atomicidad en el uso de sus referencias, debido a que solo trabaja en entornos monohilos. Esto se hace ya que implementar atomicidad nos cuesta rendimiento, por lo que es preferible solo usarlo cuando realmente se necesita: como ahora.
+
+Como dijimos, `Arc<T>` funciona exactamente igual que `Rc<T>`, por lo que solo debemos hacer pequeños cambios al código:
+```rust
+use std::sync::{Arc, Mutex};
+use std::thread;
+
+fn main(){
+    let contador = Arc::new(Mutex::new(0));     // cramos la variable global
+    let mut hilos = vec![];                     // esto nos servirá para aplicar .join() a todos los hilos
+
+    for _ in 0..10{     // 10 hilos
+        let contador_individual = Arc::clone(&contador);        // aquí la variable individual que apunta a la global
+        let hilo = thread::spawn(move || {                      // creamos los hilos
+            let mut c = contador_individual.lock().unwrap();    // creamos la variable para .lock()   
+            println!("Mensaje del hilo #{}", *c);               // imprimimos
+            *c += 1;                                            // y cambiamos el valor
+        });
+        hilos.push(hilo);                                       // guardamos el hilo
+    }   
+    // aquí usamos .join() en todos
+    for hilo in hilos {
+        hilo.join().unwrap();
+    }
+    // imprimimos el valor final
+    println!("Se ejecutaron los {} hilos correctamente.",*contador.lock().unwrap())
+}
+```
+
+Y ahora sí funciona:
+```
+Mensaje del hilo #0
+Mensaje del hilo #1
+Mensaje del hilo #2
+Mensaje del hilo #3
+Mensaje del hilo #4
+Mensaje del hilo #5
+Mensaje del hilo #6
+Mensaje del hilo #7
+Mensaje del hilo #8
+Mensaje del hilo #9
+Se ejecutaron los 10 hilos correctamente.
+```
+
+Es importate destacar que al igual que `RefCell<T>`, `Mutex<T>` implementa mutabilidad interior, es por esto que podemos editar , por ejemplo `contador`, siendo que esta era inmutable por defecto.
+
+De la misma forma, hay que recordar que al igual como `Rc<T>` no nos proteje de problemas lógicos como referencias colgantes (con referencias cíclicas); `Mutex<T>` no nos proteje de problemas clásicos como el interbloqueo. Por lo que debemos tener cuidado siempre.
+
+# Extendiendo concurrencia
+
+Es posible que haya notado que prácticamente todo lo que hablamos en esta parte sobre concurrencia ya estaba implementado en la librería estándar de Rust. Sin embargo, usted tiene toda la libertad de escribir sus propias formas de utilizar concurrencia, o usar las creadas por otros.
+
+Por ejemplo, para envíar propiedad (_ownership_) entre hilos, basta con que un tipo posea el trait de `Send`. Prácticamente todos los tipos implementan este trait, excepto claro `Rc<T>`. Y cualquier tipo que usted cree lo implementará automáticamente siempre y cuando utilice tipos que también lo implementen (nota: todos los primitivos lo implementan).
+
+De igual forma, puede crear datos que pueden ser accesibles desde cualquier hilo utilizando el trait `Sync`, que es implementado por todos los datos que implementan `Send` en sus referencias inmutables (todos los primitivos, por ejemplo). Esto claro, excepto `RefCell<T>` y `Rc<T>`.
+
+Ahora bien, si bien es cierto que normalmente no será necesario implemenatar estos traits manualmente, puede darse el caso en que necesitemos hacerlo. Para esas ocasiones, es necesario hacerlo de maneras un tanto "poco convencionales": necesitaremos `unsafe`. Pero ese es un tema que veremos más delante.
