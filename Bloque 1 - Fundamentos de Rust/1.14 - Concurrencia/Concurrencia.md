@@ -361,3 +361,15 @@ Por ejemplo, para envíar propiedad (_ownership_) entre hilos, basta con que un 
 De igual forma, puede crear datos que pueden ser accesibles desde cualquier hilo utilizando el trait `Sync`, que es implementado por todos los datos que implementan `Send` en sus referencias inmutables (todos los primitivos, por ejemplo). Esto claro, excepto `RefCell<T>` y `Rc<T>`.
 
 Ahora bien, si bien es cierto que normalmente no será necesario implemenatar estos traits manualmente, puede darse el caso en que necesitemos hacerlo. Para esas ocasiones, es necesario hacerlo de maneras un tanto "poco convencionales": necesitaremos `unsafe`. Pero ese es un tema que veremos más delante.
+
+# Asincronía
+
+Otro concepto referente a la multiprogramación es el de la asincronía. 
+
+Cuando hablamos de asincronía, en este contexto, nos estamos refiriendo a algo ligeramente diferente a lo que es la concurrencia o el paralelismo en ejecución. Por ejemplo, cuando hablamos de concurrencia nos referimos a la capacidad que tiene un programa de ejecutar multiples tareas "al mismo tiempo"; dependiendo del sistema en que se ejecute, esto puede o no ser verdad. Si realmente se ejecutan multiples partes del programa al mismo tiempo es conocido como paralelismo, si solamente simula hacerlo entonces es concurrencia (cambiando rapidamente de tarea en tarea, por ejemplo).
+
+La asincronía es algo más cercano a la concurrencia, con la diferencia que no es administrada por el sistema operativo (como ocurre con la concurrencia, en donde es el sistema operativo quien organiza quién se ejecutará y cuándo), sino desde el mismo programa. Esto, realizando ciertas tareas que pueden ser _bloqueantes_ (como una lectura de disco) de tal forma que no sean bloqueantes, y mientras se espera que se realize una tarea, realizar otra.
+
+Esto se logra, por ejemplo, con los future, que son aquellos tipos de datos que implementan el trait de `Future`, junto con las implementaciones necesarias para el mismo. _Future_ (futuro) es un valor que actualmente no se tiene, pero se tendrá en algún momento futuro de la ejecución del programa. Funciona de manera similar a como lo hacen, por ejemplo, las promesas de JavaScript, con algunos cambios importantes.
+
+Sin embargo, en este momento no tocaremos el tema. Esto para evitar entrar en profundidad en el uso de librerías (crates) externos a la librería estándar, que es el foco principal de este bloque. Sin embargo, más adelante se tocará a profundidad este tema.

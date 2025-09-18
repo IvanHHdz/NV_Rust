@@ -2,9 +2,20 @@
 
 Bienvenido al curso de Rust desde 0. En este curso vamos a partir desde lo más básico y luego especializarnos en ciertas áreas más específicas para poder ver cómo podemos aprovechar las ventajas que posee Rust en ciertos entornos.
 
-Lo recomendable, es iniciar con el primer bloque, y luego elegir el bloque que le interese más.
-
 Es recomendable también ya saber programar en algún lenguaje de programación antes de tomar el curso, pues en el curso se asume que se sabe algún lenguaje de antemano. Lo ideal sería que tenga experiencia programando en C++ y Python (lenguajes que se harán referencias para ejemplificar a lo largo del curso), aunque otros lenguajes también están bien. No se recomienda para aprender a programar como primer lenguaje.
+
+Lo recomendable, es iniciar con el primer bloque, y luego elegir el bloque que le interese más. De manera más específica, este es un esquema de "requisitos".
+
+```mermaid
+flowchart
+    A(Fundamentos de Rust) --> B(Librerías para Python)
+    A --> C(Sistemas Embebidos)
+    A --> D(Asincronía)
+    D --> E(WebAssembly)
+    A --> F(Android)
+    C --> G(Unsafe Rust)
+    D --> G
+```
 
 # [Bloque 1: Fundamentos de Rust](./Bloque%201%20-%20Fundamentos%20de%20Rust/)
 >_(Rust Vanilla)_
@@ -93,11 +104,9 @@ Es recomendable también ya saber programar en algún lenguaje de programación 
 3. Transferencia de información
 4. Exclusión mutua
 5. Extendiendo concurrencia
+6. Asincronía
 
-## [Asincronía](./Bloque%201%20-%20Fundamentos%20de%20Rust/1.15%20-%20Asincronía/Asincronía.md)
-1. 
-
-## [Conceptos avanzados](./Bloque%201%20-%20Fundamentos%20de%20Rust/1.16%20-%20Conceptos%20Avanzados/ConceptosAvanzados.md)
+## [Conceptos avanzados](./Bloque%201%20-%20Fundamentos%20de%20Rust/1.15%20-%20Conceptos%20Avanzados/ConceptosAvanzados.md)
 1. _Unsafe_
 2. Macros
 
@@ -109,28 +118,40 @@ Es recomendable también ya saber programar en algún lenguaje de programación 
 
 # Bloques en progreso
 ```markdown
-# Bloque 2: Sistemas Embebidos y Críticos  
+# Bloque 2: Librerías para Python  
+> _(Desarrollo de librerías para Python desde Rust con PyO3)_
+
+> Basado en:
+> [_PyO3 user guide_](https://pyo3.rs/v0.26.0/index.html)
+
+# Bloque 3: Sistemas Embebidos y Críticos  
 > _(Enfocado en bajo nivel, control de hardware, entornos sin sistema operativo, y aplicaciones de tiempo real.)_
 
 > Basado en:
 > [_The Embedded Rust Book_](https://docs.rust-embedded.org/book/)
 
-# Bloque 3: WebAssembly, Servidores y Backend  
-> _(Rust para aplicaciones web y servicios escalables)_
+# Bloque 4: Asincronía
+> _(Enfocado en programación asincrónica en Rust)_
+
+> Basado en:
+> [_Asynchronous Programming in Rust_](https://rust-lang.github.io/async-book/)
+
+# Bloque 5: WebAssembly, Servidores y Backend  
+> _(Enfocado en aplicaciones web y servicios escalables)_
 
 > Basado en:
 > [_Rust and WebAssembly_](https://rustwasm.github.io/docs/book/)
->
 
-# Bloque 4: Android  
-> _(Rust para software del sistema en Android)_
+# Bloque 6: Android  
+> _(Enfoque corto para software del sistema en Android)_
 
 > Basado en:
 > [_Comprehensive Rust_](https://google.github.io/comprehensive-rust/index.html)
 
-# Bloque 5: Librerías para Python  
-> _(Desarrollo de librerías para Python desde Rust con PyO3)_
+# Bloque 7: Unsafe Rust
+> _(Enfocado en las oscuras artes del unsafe rust)_
 
 > Basado en:
-> [_PyO3 user guide_](https://pyo3.rs/v0.26.0/index.html)
+> [The Rustonomicon](https://doc.rust-lang.org/nomicon/)
+
 ```
