@@ -106,7 +106,15 @@ flowchart
 5. Extendiendo concurrencia
 6. Asincronía
 
-## [Conceptos avanzados](./Bloque%201%20-%20Fundamentos%20de%20Rust/1.15%20-%20Conceptos%20Avanzados/ConceptosAvanzados.md)
+## [Patterns](./Bloque%201%20-%20Fundamentos%20de%20Rust/1.15%20-%20Patterns/Patterns.md)
+1. Patters
+2. Patterns con `match`
+3. Patterns con `if`
+4. Patterns con variables
+5. Patterns con `while`
+6. Desestructuración
+
+## [Conceptos avanzados](./Bloque%201%20-%20Fundamentos%20de%20Rust/1.16%20-%20Conceptos%20Avanzados/ConceptosAvanzados.md)
 1. _Unsafe_
 2. Macros
 
