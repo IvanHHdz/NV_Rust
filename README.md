@@ -162,4 +162,10 @@ flowchart
 > Basado en:
 > [The Rustonomicon](https://doc.rust-lang.org/nomicon/)
 
+# Bloque 8: Macros
+> _(Enfocado a la creación de macros de rust)_
+
+> Basado en:
+> [The Little Book of Rust Macros](https://lukaswirth.dev/tlborm/)
+
 ```
