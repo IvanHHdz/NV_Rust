@@ -109,40 +109,56 @@ Este curso completo de Rust está diseñado para desarrolladores que desean domi
 5. Patterns con `while`
 6. Desestructuración
 
-## 1.14 - Conceptos avanzados
+## 1.16 - Conceptos avanzados
 1. _Unsafe_
 2. Macros
 
-## 1.15 - Proyecto
+## 1.17 - Proyecto
 > _(Aplicación de línea de comandos en Rust)_
 >
 > Basado en:
 > [_Command Line Applications in Rust_](https://rust-cli.github.io/book/index.html)
 
-<!-- TODO - actualzar los bloques -->
-# Bloque 2: Sistemas Embebidos y Críticos  
+# Bloque 2: Asincronía
+> _(Enfocado en programación asincrónica en Rust)_
+
+> Basado en:
+> [_Asynchronous Programming in Rust_](https://rust-lang.github.io/async-book/)
+
+# Bloque 3: WebAssembly, Servidores y Backend  
+> _(Enfocado en aplicaciones web y servicios escalables)_
+
+> Basado en:
+> [_Rust and WebAssembly_](https://rustwasm.github.io/docs/book/)
+
+# Bloque 4: Librerías para Python  
+> _(Desarrollo de librerías para Python desde Rust con PyO3)_
+
+> Basado en:
+> [_PyO3 user guide_](https://pyo3.rs/v0.26.0/index.html)
+
+# Bloque 5: Sistemas Embebidos y Críticos  
 > _(Enfocado en bajo nivel, control de hardware, entornos sin sistema operativo, y aplicaciones de tiempo real.)_
->
+
 > Basado en:
 > [_The Embedded Rust Book_](https://docs.rust-embedded.org/book/)
 
-# Bloque 3: WebAssembly, Servidores y Backend  
-> _(Rust para aplicaciones web y servicios escalables)_
->
-> Basado en:
-> [_Rust and WebAssembly_](https://rustwasm.github.io/docs/book/)
->
+# Bloque 6: Android  
+> _(Enfoque corto para software del sistema en Android)_
 
-# Bloque 4: Android  
-> _(Rust para software del sistema en Android)_
->
 > Basado en:
 > [_Comprehensive Rust_](https://google.github.io/comprehensive-rust/index.html)
 
-# Bloque 5: Librerías para Python  
-> _(Desarrollo de librerías para Python desde Rust con PyO3)_
->
+# Bloque 7: Unsafe Rust
+> _(Enfocado en las oscuras artes del unsafe rust)_
+
 > Basado en:
-> [_PyO3 user guide_](https://pyo3.rs/v0.26.0/index.html)
+> [The Rustonomicon](https://doc.rust-lang.org/nomicon/)
+
+# Bloque 8: Macros
+> _(Enfocado a la creación de macros de rust)_
+
+> Basado en:
+> [The Little Book of Rust Macros](https://lukaswirth.dev/tlborm/)
 
 <!-- TODO - actualizar el pdf respectivo -->
