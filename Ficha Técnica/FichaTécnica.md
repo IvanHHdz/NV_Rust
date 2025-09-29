@@ -172,5 +172,3 @@ Este curso completo de Rust está diseñado para desarrolladores que desean domi
 
 > Basado en:
 > [The Little Book of Rust Macros](https://lukaswirth.dev/tlborm/)
-
-<!-- TODO - actualizar el pdf respectivo -->
