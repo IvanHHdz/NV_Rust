@@ -119,30 +119,43 @@ flowchart
 2. Macros
 
 ## Proyecto
+<!-- TODO - Proyecto CLI -->
+
 > _(Aplicación de línea de comandos en Rust)_
 >
 > Basado en:
 > [_Command Line Applications in Rust_](https://rust-cli.github.io/book/index.html)
 
+# Bloque 2: Asincronía
+> _(Enfocado en programación asincrónica en Rust y en el uso de Tokyo)_
+<!-- TODO - Bloque 2: asincronía -->
+
+<!-- 
+## Introducción a la programación asincrónica
+1. Asincronía
+2. Future 
+3. `async` y `await`
+-->
+
+> Basado en:
+> [_Asynchronous Programming in Rust_](https://rust-lang.github.io/async-book/) 
+> y en
+> [_Tokyo Tutorial_](https://tokio.rs/tokio/tutorial)
+
+<!-- TODO - Bloques en progreso -->
 # Bloques en progreso
 ```markdown
-# Bloque 2: Librerías para Python  
+# Bloque 3: Librerías para Python  
 > _(Desarrollo de librerías para Python desde Rust con PyO3)_
 
 > Basado en:
 > [_PyO3 user guide_](https://pyo3.rs/v0.26.0/index.html)
 
-# Bloque 3: Sistemas Embebidos y Críticos  
+# Bloque 4: Sistemas Embebidos y Críticos  
 > _(Enfocado en bajo nivel, control de hardware, entornos sin sistema operativo, y aplicaciones de tiempo real.)_
 
 > Basado en:
 > [_The Embedded Rust Book_](https://docs.rust-embedded.org/book/)
-
-# Bloque 4: Asincronía
-> _(Enfocado en programación asincrónica en Rust)_
-
-> Basado en:
-> [_Asynchronous Programming in Rust_](https://rust-lang.github.io/async-book/)
 
 # Bloque 5: WebAssembly, Servidores y Backend  
 > _(Enfocado en aplicaciones web y servicios escalables)_
