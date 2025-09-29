@@ -15,6 +15,8 @@ flowchart
     A --> F(Android)
     C --> G(Unsafe Rust)
     D --> G
+    C --> H(Macros)
+    D --> H
 ```
 
 # [Bloque 1: Fundamentos de Rust](./Bloque%201%20-%20Fundamentos%20de%20Rust/)
