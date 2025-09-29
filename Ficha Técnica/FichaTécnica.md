@@ -84,7 +84,14 @@ Este curso completo de Rust está diseñado para desarrolladores que desean domi
 1. Programación Funcional
 2. Programación Orientada a Objetos
 
-<!-- TODO - insertar punteros inteligentes -->
+## 1.13 - Punteros Inteligentes
+1. Punteros Inteligentes
+2. `Box<T>`
+3. `Deref`
+4. `Drop`
+5. `Rc<T>`
+6. `RefCell<T>`
+7. `Weak<T>`
 
 <!-- TODO - corregir índice de concurrencia -->
 ## 1.14 - Concurrencia
