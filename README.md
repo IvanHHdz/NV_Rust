@@ -126,29 +126,29 @@ flowchart
 
 # Bloques en progreso
 ```markdown
-# Bloque 2: Librerías para Python  
-> _(Desarrollo de librerías para Python desde Rust con PyO3)_
-
-> Basado en:
-> [_PyO3 user guide_](https://pyo3.rs/v0.26.0/index.html)
-
-# Bloque 3: Sistemas Embebidos y Críticos  
-> _(Enfocado en bajo nivel, control de hardware, entornos sin sistema operativo, y aplicaciones de tiempo real.)_
-
-> Basado en:
-> [_The Embedded Rust Book_](https://docs.rust-embedded.org/book/)
-
-# Bloque 4: Asincronía
+# Bloque 2: Asincronía
 > _(Enfocado en programación asincrónica en Rust)_
 
 > Basado en:
 > [_Asynchronous Programming in Rust_](https://rust-lang.github.io/async-book/)
 
-# Bloque 5: WebAssembly, Servidores y Backend  
+# Bloque 3: WebAssembly, Servidores y Backend  
 > _(Enfocado en aplicaciones web y servicios escalables)_
 
 > Basado en:
 > [_Rust and WebAssembly_](https://rustwasm.github.io/docs/book/)
+
+# Bloque 4: Librerías para Python  
+> _(Desarrollo de librerías para Python desde Rust con PyO3)_
+
+> Basado en:
+> [_PyO3 user guide_](https://pyo3.rs/v0.26.0/index.html)
+
+# Bloque 5: Sistemas Embebidos y Críticos  
+> _(Enfocado en bajo nivel, control de hardware, entornos sin sistema operativo, y aplicaciones de tiempo real.)_
+
+> Basado en:
+> [_The Embedded Rust Book_](https://docs.rust-embedded.org/book/)
 
 # Bloque 6: Android  
 > _(Enfoque corto para software del sistema en Android)_

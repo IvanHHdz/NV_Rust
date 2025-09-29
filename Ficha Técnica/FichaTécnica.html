@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>FichaTécnica.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<!-- TODO - Actualizar ficha técnica -->
+<h1 id="rust">Rust</h1>
+<blockquote>
+<p>Curso de Rust desde 0.</p>
+</blockquote>
+<p>En este curso vamos a partir desde lo más básico y luego especializarnos en ciertas áreas más específicas para poder ver cómo podemos aprovechar las ventajas que posee Rust en ciertos entornos.</p>
+<p>Lo recomendable, es iniciar con el primer bloque, y luego elegir el bloque que le interese más. De manera más específica, este es un esquema de &quot;requisitos&quot;.</p>
+<pre><code class="language-mermaid"><div class="mermaid">flowchart
+    A(Fundamentos de Rust) --> B(Librerías para Python)
+    A --> C(Sistemas Embebidos)
+    A --> D(Asincronía)
+    D --> E(WebAssembly)
+    A --> F(Android)
+    C --> G(Unsafe Rust)
+    D --> G
+    C --> H
+    D --> H(Macros)
+</div></code></pre>
+<p>Es recomendable también ya saber programar en algún lenguaje de programación antes de tomar el curso, pues en el curso se asume que se sabe algún lenguaje de antemano. Lo ideal sería que tenga experiencia programando en C++ y Python (lenguajes que se harán referencias para ejemplificar a lo largo del curso), aunque otros lenguajes también están bien. No se recomienda para aprender a programar como primer lenguaje.</p>
+<p><strong>Descripción General del Curso</strong></p>
+<p>Este curso completo de Rust está diseñado para desarrolladores que desean dominar este lenguaje de programación de sistemas, reconocido por su seguridad, rendimiento y concurrencia. Estructurado en cinco bloques, abarca desde los fundamentos de Rust hasta aplicaciones avanzadas en sistemas embebidos, desarrollo web, Android y creación de librerías para Python. Basado en recursos oficiales como <em>The Rust Programming Language</em>, <em>The Embedded Rust Book</em>, <em>Rust and WebAssembly</em>, <em>Comprehensive Rust</em> y <em>PyO3 User Guide</em>. Los participantes aprenderán a escribir código seguro y eficiente, aplicar Rust en diversos dominios y desarrollar una aplicación de línea de comandos. Ideal para programadores con experiencia básica que buscan habilidades en programación de sistemas moderna.</p>
+<h1 id="bloque-1-fundamentos-de-rust">Bloque 1: Fundamentos de Rust</h1>
+<blockquote>
+<p><em>(Rust Vanilla)</em></p>
+<p>Basado en:
+<a href="https://doc.rust-lang.org/book/title-page.html"><em>The Rust Programming Language</em></a></p>
+</blockquote>
+<h2 id="101---introducci%C3%B3n">1.01 - Introducción</h2>
+<ol>
+<li>Rust</li>
+<li>Instalación</li>
+<li>Compilador: <code>rustc</code> y <code>cargo</code></li>
+<li>IDEs</li>
+<li>Hello World!</li>
+</ol>
+<h2 id="102---conceptos-b%C3%A1sicos">1.02 - Conceptos básicos</h2>
+<ol>
+<li>Variables y mutabilidad</li>
+<li>Tipos de datos</li>
+<li>Operaciones</li>
+<li><em>Input</em>/<em>Output</em></li>
+<li>Importaciones</li>
+<li><code>const</code></li>
+</ol>
+<h2 id="103---control-de-flujo">1.03 - Control de flujo</h2>
+<ol>
+<li>Condicionales</li>
+<li>Bucles</li>
+</ol>
+<h2 id="104---funciones-y-bloques">1.04 - Funciones y bloques</h2>
+<ol>
+<li>Funciones</li>
+<li>Parámetros y retorno</li>
+<li>Bloques y alcance</li>
+</ol>
+<h2 id="105---ownership">1.05 - <em>Ownership</em></h2>
+<ol>
+<li>Reglas de propiedad</li>
+<li>Cadenas de texto</li>
+<li>Mover</li>
+<li>Clonar y copiar</li>
+<li>Funciones</li>
+<li>Referencias y <em>borrowing</em></li>
+<li>El compilador</li>
+</ol>
+<h2 id="106---datos-compuestos">1.06 - Datos compuestos</h2>
+<ol>
+<li>Cadenas de Texto</li>
+<li>Arreglos</li>
+<li>Tuplas</li>
+<li>Vectores</li>
+<li>Hash Maps</li>
+<li><code>slice</code></li>
+</ol>
+<h2 id="107---estructuras">1.07 - Estructuras</h2>
+<ol>
+<li>Estructuras</li>
+<li>Métodos</li>
+</ol>
+<h2 id="108---enums">1.08 - <em>Enums</em></h2>
+<ol>
+<li><em>Enums</em></li>
+<li>Match</li>
+<li><code>if let</code></li>
+</ol>
+<h2 id="109---paquetes-y-manejo-de-errores">1.09 - Paquetes y manejo de errores</h2>
+<ol>
+<li>Paquetes, crates y módulos</li>
+<li>Manejo de errores</li>
+</ol>
+<h2 id="110---datos-gen%C3%A9ricos-traits-y-lifetime">1.10 - Datos genéricos, <em>traits</em> y <em>lifetime</em></h2>
+<ol>
+<li>Tipos de datos genéricos</li>
+<li><em>Traits</em></li>
+<li><em>Lifetime</em></li>
+</ol>
+<h2 id="111---pruebas">1.11 - Pruebas</h2>
+<ol>
+<li>Pruebas (<em>tests</em>)</li>
+</ol>
+<h2 id="112---paradigmas-de-programaci%C3%B3n">1.12 - Paradigmas de programación</h2>
+<ol>
+<li>Programación Funcional</li>
+<li>Programación Orientada a Objetos</li>
+</ol>
+<h2 id="113---punteros-inteligentes">1.13 - Punteros Inteligentes</h2>
+<ol>
+<li>Punteros Inteligentes</li>
+<li><code>Box&lt;T&gt;</code></li>
+<li><code>Deref</code></li>
+<li><code>Drop</code></li>
+<li><code>Rc&lt;T&gt;</code></li>
+<li><code>RefCell&lt;T&gt;</code></li>
+<li><code>Weak&lt;T&gt;</code></li>
+</ol>
+<h2 id="114---concurrencia">1.14 - Concurrencia</h2>
+<ol>
+<li><em>Fearless Concurrency</em></li>
+<li>Hilos</li>
+<li>Transferencia de información</li>
+<li>Exclusión mutua</li>
+<li>Extendiendo concurrencia</li>
+<li>Asincronía</li>
+</ol>
+<h2 id="115---patterns">1.15 - Patterns</h2>
+<ol>
+<li>Patters</li>
+<li>Patterns con <code>match</code></li>
+<li>Patterns con <code>if</code></li>
+<li>Patterns con variables</li>
+<li>Patterns con <code>while</code></li>
+<li>Desestructuración</li>
+</ol>
+<h2 id="116---conceptos-avanzados">1.16 - Conceptos avanzados</h2>
+<ol>
+<li><em>Unsafe</em></li>
+<li>Macros</li>
+</ol>
+<h2 id="117---proyecto">1.17 - Proyecto</h2>
+<blockquote>
+<p><em>(Aplicación de línea de comandos en Rust)</em></p>
+<p>Basado en:
+<a href="https://rust-cli.github.io/book/index.html"><em>Command Line Applications in Rust</em></a></p>
+</blockquote>
+<h1 id="bloque-2-asincron%C3%ADa">Bloque 2: Asincronía</h1>
+<blockquote>
+<p><em>(Enfocado en programación asincrónica en Rust)</em></p>
+</blockquote>
+<blockquote>
+<p>Basado en:
+<a href="https://rust-lang.github.io/async-book/"><em>Asynchronous Programming in Rust</em></a></p>
+</blockquote>
+<h1 id="bloque-3-webassembly-servidores-y-backend">Bloque 3: WebAssembly, Servidores y Backend</h1>
+<blockquote>
+<p><em>(Enfocado en aplicaciones web y servicios escalables)</em></p>
+</blockquote>
+<blockquote>
+<p>Basado en:
+<a href="https://rustwasm.github.io/docs/book/"><em>Rust and WebAssembly</em></a></p>
+</blockquote>
+<h1 id="bloque-4-librer%C3%ADas-para-python">Bloque 4: Librerías para Python</h1>
+<blockquote>
+<p><em>(Desarrollo de librerías para Python desde Rust con PyO3)</em></p>
+</blockquote>
+<blockquote>
+<p>Basado en:
+<a href="https://pyo3.rs/v0.26.0/index.html"><em>PyO3 user guide</em></a></p>
+</blockquote>
+<h1 id="bloque-5-sistemas-embebidos-y-cr%C3%ADticos">Bloque 5: Sistemas Embebidos y Críticos</h1>
+<blockquote>
+<p><em>(Enfocado en bajo nivel, control de hardware, entornos sin sistema operativo, y aplicaciones de tiempo real.)</em></p>
+</blockquote>
+<blockquote>
+<p>Basado en:
+<a href="https://docs.rust-embedded.org/book/"><em>The Embedded Rust Book</em></a></p>
+</blockquote>
+<h1 id="bloque-6-android">Bloque 6: Android</h1>
+<blockquote>
+<p><em>(Enfoque corto para software del sistema en Android)</em></p>
+</blockquote>
+<blockquote>
+<p>Basado en:
+<a href="https://google.github.io/comprehensive-rust/index.html"><em>Comprehensive Rust</em></a></p>
+</blockquote>
+<h1 id="bloque-7-unsafe-rust">Bloque 7: Unsafe Rust</h1>
+<blockquote>
+<p><em>(Enfocado en las oscuras artes del unsafe rust)</em></p>
+</blockquote>
+<blockquote>
+<p>Basado en:
+<a href="https://doc.rust-lang.org/nomicon/">The Rustonomicon</a></p>
+</blockquote>
+<h1 id="bloque-8-macros">Bloque 8: Macros</h1>
+<blockquote>
+<p><em>(Enfocado a la creación de macros de rust)</em></p>
+</blockquote>
+<blockquote>
+<p>Basado en:
+<a href="https://lukaswirth.dev/tlborm/">The Little Book of Rust Macros</a></p>
+</blockquote>
+<!-- TODO - actualizar el pdf respectivo -->
+</body>
+</html>
