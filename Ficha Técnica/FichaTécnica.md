@@ -93,12 +93,13 @@ Este curso completo de Rust está diseñado para desarrolladores que desean domi
 6. `RefCell<T>`
 7. `Weak<T>`
 
-<!-- TODO - corregir índice de concurrencia -->
 ## 1.14 - Concurrencia
 1. _Fearless Concurrency_
 2. Hilos
 3. Transferencia de información
-4. Programación asincrónica
+4. Exclusión mutua
+5. Extendiendo concurrencia
+6. Asincronía
 
 <!-- TODO - insertar patterns-->
 
