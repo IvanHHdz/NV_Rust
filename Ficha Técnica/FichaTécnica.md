@@ -3,7 +3,20 @@
 
 En este curso vamos a partir desde lo más básico y luego especializarnos en ciertas áreas más específicas para poder ver cómo podemos aprovechar las ventajas que posee Rust en ciertos entornos.
 
-Lo recomendable, es iniciar con el primer bloque, y luego elegir el bloque que le interese más.
+Lo recomendable, es iniciar con el primer bloque, y luego elegir el bloque que le interese más. De manera más específica, este es un esquema de "requisitos".
+
+```mermaid
+flowchart
+    A(Fundamentos de Rust) --> B(Librerías para Python)
+    A --> C(Sistemas Embebidos)
+    A --> D(Asincronía)
+    D --> E(WebAssembly)
+    A --> F(Android)
+    C --> G(Unsafe Rust)
+    D --> G
+    C --> H
+    D --> H(Macros)
+```
 
 Es recomendable también ya saber programar en algún lenguaje de programación antes de tomar el curso, pues en el curso se asume que se sabe algún lenguaje de antemano. Lo ideal sería que tenga experiencia programando en C++ y Python (lenguajes que se harán referencias para ejemplificar a lo largo del curso), aunque otros lenguajes también están bien. No se recomienda para aprender a programar como primer lenguaje.
 
@@ -83,44 +96,79 @@ Este curso completo de Rust está diseñado para desarrolladores que desean domi
 1. Programación Funcional
 2. Programación Orientada a Objetos
 
-## 1.13 - Concurrencia y asincronía
+## 1.13 - Punteros Inteligentes
+1. Punteros Inteligentes
+2. `Box<T>`
+3. `Deref`
+4. `Drop`
+5. `Rc<T>`
+6. `RefCell<T>`
+7. `Weak<T>`
+
+## 1.14 - Concurrencia
 1. _Fearless Concurrency_
 2. Hilos
 3. Transferencia de información
-4. Programación asincrónica
+4. Exclusión mutua
+5. Extendiendo concurrencia
+6. Asincronía
 
-## 1.14 - Conceptos avanzados
-1. Punteros inteligentes
-2. _Unsafe_
-3. Macros
+## 1.15 - Patterns
+1. Patters
+2. Patterns con `match`
+3. Patterns con `if`
+4. Patterns con variables
+5. Patterns con `while`
+6. Desestructuración
 
-## 1.15 - Proyecto
+## 1.16 - Conceptos avanzados
+1. _Unsafe_
+2. Macros
+
+## 1.17 - Proyecto
 > _(Aplicación de línea de comandos en Rust)_
 >
 > Basado en:
 > [_Command Line Applications in Rust_](https://rust-cli.github.io/book/index.html)
 
-# Bloque 2: Sistemas Embebidos y Críticos  
+# Bloque 2: Asincronía
+> _(Enfocado en programación asincrónica en Rust)_
+
+> Basado en:
+> [_Asynchronous Programming in Rust_](https://rust-lang.github.io/async-book/)
+
+# Bloque 3: WebAssembly, Servidores y Backend  
+> _(Enfocado en aplicaciones web y servicios escalables)_
+
+> Basado en:
+> [_Rust and WebAssembly_](https://rustwasm.github.io/docs/book/)
+
+# Bloque 4: Librerías para Python  
+> _(Desarrollo de librerías para Python desde Rust con PyO3)_
+
+> Basado en:
+> [_PyO3 user guide_](https://pyo3.rs/v0.26.0/index.html)
+
+# Bloque 5: Sistemas Embebidos y Críticos  
 > _(Enfocado en bajo nivel, control de hardware, entornos sin sistema operativo, y aplicaciones de tiempo real.)_
->
+
 > Basado en:
 > [_The Embedded Rust Book_](https://docs.rust-embedded.org/book/)
 
-# Bloque 3: WebAssembly, Servidores y Backend  
-> _(Rust para aplicaciones web y servicios escalables)_
->
-> Basado en:
-> [_Rust and WebAssembly_](https://rustwasm.github.io/docs/book/)
->
+# Bloque 6: Android  
+> _(Enfoque corto para software del sistema en Android)_
 
-# Bloque 4: Android  
-> _(Rust para software del sistema en Android)_
->
 > Basado en:
 > [_Comprehensive Rust_](https://google.github.io/comprehensive-rust/index.html)
 
-# Bloque 5: Librerías para Python  
-> _(Desarrollo de librerías para Python desde Rust con PyO3)_
->
+# Bloque 7: Unsafe Rust
+> _(Enfocado en las oscuras artes del unsafe rust)_
+
 > Basado en:
-> [_PyO3 user guide_](https://pyo3.rs/v0.26.0/index.html)
+> [The Rustonomicon](https://doc.rust-lang.org/nomicon/)
+
+# Bloque 8: Macros
+> _(Enfocado a la creación de macros de rust)_
+
+> Basado en:
+> [The Little Book of Rust Macros](https://lukaswirth.dev/tlborm/)
