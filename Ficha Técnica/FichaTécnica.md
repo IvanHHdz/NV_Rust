@@ -101,7 +101,13 @@ Este curso completo de Rust está diseñado para desarrolladores que desean domi
 5. Extendiendo concurrencia
 6. Asincronía
 
-<!-- TODO - insertar patterns-->
+## 1.15 - Patterns
+1. Patters
+2. Patterns con `match`
+3. Patterns con `if`
+4. Patterns con variables
+5. Patterns con `while`
+6. Desestructuración
 
 ## 1.14 - Conceptos avanzados
 1. _Unsafe_
