@@ -1,4 +1,3 @@
-<!-- TODO - Actualizar ficha técnica -->
 # Rust
 > Curso de Rust desde 0. 
 
@@ -15,6 +14,8 @@ flowchart
     A --> F(Android)
     C --> G(Unsafe Rust)
     D --> G
+    C --> H
+    D --> H(Macros)
 ```
 
 Es recomendable también ya saber programar en algún lenguaje de programación antes de tomar el curso, pues en el curso se asume que se sabe algún lenguaje de antemano. Lo ideal sería que tenga experiencia programando en C++ y Python (lenguajes que se harán referencias para ejemplificar a lo largo del curso), aunque otros lenguajes también están bien. No se recomienda para aprender a programar como primer lenguaje.
