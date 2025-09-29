@@ -23,3 +23,9 @@ Para este ejemplo es importante recordar importar `tokyo` en el `Cargo.toml`:
 tokio = { version = "1.40.0", features = ["full"] }
 ```
 
+# Future
+
+Un concepto central dentro de la programación asincrónica de Rust es el de Future. Un future es cualquier estructura (como struct, enum, etc) que implementa el trait de `Future`. Este trait nos permite trabajar con el dato aún cuando no lo tenemos todavía. Funcionando de manera similar a como funcionan las promesas en lenguajes como JavaScript.
+
+De momento no tocaremos mucho el concepto. Sin embargo, más adelante lo veremos a detalle junto a los _big futures_, que son combinaciones para crear tareas de rust, que son los future al ejecutarse. 
+
