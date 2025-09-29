@@ -1,3 +1,4 @@
+<!-- TODO - Actualizar ficha técnica -->
 # Rust
 > Curso de Rust desde 0. 
 
@@ -83,16 +84,20 @@ Este curso completo de Rust está diseñado para desarrolladores que desean domi
 1. Programación Funcional
 2. Programación Orientada a Objetos
 
-## 1.13 - Concurrencia y asincronía
+<!-- TODO - insertar punteros inteligentes -->
+
+<!-- TODO - corregir índice de concurrencia -->
+## 1.14 - Concurrencia
 1. _Fearless Concurrency_
 2. Hilos
 3. Transferencia de información
 4. Programación asincrónica
 
+<!-- TODO - insertar patterns-->
+
 ## 1.14 - Conceptos avanzados
-1. Punteros inteligentes
-2. _Unsafe_
-3. Macros
+1. _Unsafe_
+2. Macros
 
 ## 1.15 - Proyecto
 > _(Aplicación de línea de comandos en Rust)_
@@ -100,6 +105,7 @@ Este curso completo de Rust está diseñado para desarrolladores que desean domi
 > Basado en:
 > [_Command Line Applications in Rust_](https://rust-cli.github.io/book/index.html)
 
+<!-- TODO - actualzar los bloques -->
 # Bloque 2: Sistemas Embebidos y Críticos  
 > _(Enfocado en bajo nivel, control de hardware, entornos sin sistema operativo, y aplicaciones de tiempo real.)_
 >
@@ -124,3 +130,5 @@ Este curso completo de Rust está diseñado para desarrolladores que desean domi
 >
 > Basado en:
 > [_PyO3 user guide_](https://pyo3.rs/v0.26.0/index.html)
+
+<!-- TODO - actualizar el pdf respectivo -->
