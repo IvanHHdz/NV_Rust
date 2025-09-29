@@ -4,7 +4,18 @@
 
 En este curso vamos a partir desde lo más básico y luego especializarnos en ciertas áreas más específicas para poder ver cómo podemos aprovechar las ventajas que posee Rust en ciertos entornos.
 
-Lo recomendable, es iniciar con el primer bloque, y luego elegir el bloque que le interese más.
+Lo recomendable, es iniciar con el primer bloque, y luego elegir el bloque que le interese más. De manera más específica, este es un esquema de "requisitos".
+
+```mermaid
+flowchart
+    A(Fundamentos de Rust) --> B(Librerías para Python)
+    A --> C(Sistemas Embebidos)
+    A --> D(Asincronía)
+    D --> E(WebAssembly)
+    A --> F(Android)
+    C --> G(Unsafe Rust)
+    D --> G
+```
 
 Es recomendable también ya saber programar en algún lenguaje de programación antes de tomar el curso, pues en el curso se asume que se sabe algún lenguaje de antemano. Lo ideal sería que tenga experiencia programando en C++ y Python (lenguajes que se harán referencias para ejemplificar a lo largo del curso), aunque otros lenguajes también están bien. No se recomienda para aprender a programar como primer lenguaje.
 
