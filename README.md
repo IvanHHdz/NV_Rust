@@ -144,6 +144,17 @@ flowchart
 > y en
 > [_Tokyo Tutorial_](https://tokio.rs/tokio/tutorial)
 
+## Introducción
+1. Asincronía
+2. Future
+3. `async` y `await`
+4. Lanzar tareas
+
+## Composición de Futures concurrente
+1. Composición
+2. `join`
+3. `race/select`
+
 <!-- TODO - Bloques en progreso -->
 # Bloques en progreso
 ```markdown
