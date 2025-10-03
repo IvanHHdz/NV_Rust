@@ -2,7 +2,7 @@ use tokio::{select, sync::oneshot::channel};
 
 #[tokio::main]
 async fn main() {
-    let (tx, rx) = channel();
+    // let (tx, rx) = channel(); // Removed unused channel to fix type inference error
     let resultado = select! {
         Some(res) = suma_lenta(1, 2) => res,
         res = suma_super_lenta(3, 4) => res.unwrap(),
