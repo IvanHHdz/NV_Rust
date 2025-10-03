@@ -131,4 +131,34 @@ El ejemplo con `async`, como podemos ver, se ejecuta todo el `main` hasta llegar
 
 Por otro lado, el ejemplo con hilos, podemos ver que mientras se espera al segundo que se da, se ejecuta una parte de la función `suma_lenta()`, para luego esperar los 5 segundos. Mientras espera, se ejecuta parte del main hasta que se bloquea esperando el valor por el canal. Pueden estar tomando turnos, o **ejecutándose paralelamente** (eso depende del sistema operativo y de la máquina), pero de eso no se encarga el programa, sino el sistema operativo. 
 
-<!-- TODO - Spawning tasks -->
+# Lanzar tareas
+
+Sin embargo, es importante tener en mente que, usar la asincronía de la forma anterior no es lo más ideal. Pues no estamos aprovechando el tiempo de espera (en estos casos, los momentos que se usa `sleep`), mientras que con hilos sí la estamos aprovechando. Para lograr esto, debemos hacerlo de forma distinta: lanzando las tareas. Para esto, debemos hacer uso de la función `spawn` de Tokyo, esto debido a que las tareas (tasks) son conceptos propios del runtime.
+
+Por ejemplo, el ejemplo anterior nos quedaría:
+```rust
+use tokio::spawn;
+
+#[tokio::main] 
+async fn main() {
+    let resultado = spawn(suma_lenta(5, 10));
+    tokio::time::sleep(std::time::Duration::from_secs(1)).await;
+    println!("Hola, mundo!");
+    println!("El resultado es: {}", resultado.await.unwrap());  // ahora el .await funciona como el .join de hilos
+}
+
+// esta es la función 
+async fn suma_lenta(a: i32, b: i32) -> i32 {
+    println!("Calculando la suma de {} y {}...", a, b);
+    tokio::time::sleep(std::time::Duration::from_secs(5)).await;
+    a + b 
+}
+// imprimirá:
+/*  
+    Calculando la suma de 5 y 10...
+    Hola, mundo!
+    El resultado es: 15
+*/
+```
+
+Notemos que ahora parece estarse ejecutando como se ejecutaba con hilos. En realidad, está haciendo lo mismo. La diferencia radica en el hecho que, quien se encarga de organizar cuales tareas tendrán hilos del sistema (si el sistema puede tener hilos) es el runtime de Tokyo. Esto, si bien parece en principio igual que lanzar hilos, tiene ciertas ventajas: algunas tareas (las que no se lanzaron en hilos del sistema) tendrán tiempos de respuesta más cortos, además que sigue manteniendo cierta concurrencia incluso en sistemas que no soporten hilos.
