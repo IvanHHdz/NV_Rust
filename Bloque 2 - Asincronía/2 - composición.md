@@ -110,4 +110,49 @@ async fn calcular_y(m: f64, a: f64) -> Result<f64, String> {
 }
 ```
 
-<!-- TODO falta race/select>
+# `race/select`
+De manera similar a `join`, se lanzan varias tareas de manera concurrente (no paralela). La diferencia es que no se espera a que todas las tareas terminen, sino al terminar una las demás se cancelan. Veamos un ejemplo:
+```rust
+use tokio::select;
+
+#[tokio::main]
+async fn main() {
+    let resutado = select! {
+        res = suma_lenta(1, 2) => res,
+        res = suma_super_lenta(3, 4) => res,
+    };
+}
+
+async fn suma_lenta(a: i32, b: i32) -> i32 {
+    tokio::time::sleep(tokio::time::Duration::from_secs(5)).await;
+    a + b
+}
+
+async fn suma_super_lenta(a: i32, b: i32) -> i32 {
+    tokio::time::sleep(tokio::time::Duration::from_secs(10)).await;
+    a + b
+}
+```
+
+Como podemos ver, funciona como un `match`. De hecho, acepta patterns, de la misma manera que un `match` o un `if let`. 
+```rust
+use tokio::select;
+
+#[tokio::main]
+async fn main() {
+    let resultado = select! {
+        Some(res) = suma_lenta(1, 2) => res,
+        res = suma_super_lenta(3, 4) => res.unwrap(),
+    };
+}
+
+async fn suma_lenta(a: i32, b: i32) -> Option<i32> {
+    tokio::time::sleep(tokio::time::Duration::from_secs(5)).await;
+    Some(a + b)
+}
+
+async fn suma_super_lenta(a: i32, b: i32) -> Option<i32> {
+    tokio::time::sleep(tokio::time::Duration::from_secs(10)).await;
+    Some(a + b)
+}
+```

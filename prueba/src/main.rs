@@ -1,25 +1,20 @@
-use tokio::join;
+use tokio::{select, sync::oneshot::channel};
 
 #[tokio::main]
 async fn main() {
-    let magnitud = 25f64;
-    let angulo = 1.031448;
-
-    println!("Calculando...");
-
-    let (x, y) = join!(calcular_x(magnitud, angulo), calcular_y(magnitud, angulo));
-
-    println!("Las coordenadas para una magnitud {magnitud} y un angulo {angulo} son ({x}, {y})");
+    let (tx, rx) = channel();
+    let resultado = select! {
+        Some(res) = suma_lenta(1, 2) => res,
+        res = suma_super_lenta(3, 4) => res.unwrap(),
+    };
 }
 
-async fn calcular_x(m: f64, a: f64) -> f64 {
-    println!("Calculando x...");
-    tokio::time::sleep(std::time::Duration::from_secs(5)).await;
-    m * a.cos()
+async fn suma_lenta(a: i32, b: i32) -> Option<i32> {
+    tokio::time::sleep(tokio::time::Duration::from_secs(5)).await;
+    Some(a + b)
 }
 
-async fn calcular_y(m: f64, a: f64) -> f64 {
-    println!("Calculando y...");
-    tokio::time::sleep(std::time::Duration::from_secs(5)).await;
-    m * a.sin()
+async fn suma_super_lenta(a: i32, b: i32) -> Option<i32> {
+    tokio::time::sleep(tokio::time::Duration::from_secs(10)).await;
+    Some(a + b)
 }
