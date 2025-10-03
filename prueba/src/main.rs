@@ -18,3 +18,4 @@ async fn suma_super_lenta(a: i32, b: i32) -> Option<i32> {
     tokio::time::sleep(tokio::time::Duration::from_secs(10)).await;
     Some(a + b)
 }
+
