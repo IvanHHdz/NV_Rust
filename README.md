@@ -124,6 +124,12 @@ flowchart
 > Basado en:
 > [_Command Line Applications in Rust_](https://rust-cli.github.io/book/index.html)
 
+# Bloque 3: WebAssembly, Servidores y Backend  
+> _(Enfocado en aplicaciones web y servicios escalables)_
+
+> Basado en:
+> [_Rust and WebAssembly_](https://rustwasm.github.io/docs/book/)
+
 # Bloques en progreso
 ```markdown
 # Bloque 2: Asincronía
@@ -132,11 +138,6 @@ flowchart
 > Basado en:
 > [_Asynchronous Programming in Rust_](https://rust-lang.github.io/async-book/)
 
-# Bloque 3: WebAssembly, Servidores y Backend  
-> _(Enfocado en aplicaciones web y servicios escalables)_
-
-> Basado en:
-> [_Rust and WebAssembly_](https://rustwasm.github.io/docs/book/)
 
 # Bloque 4: Librerías para Python  
 > _(Desarrollo de librerías para Python desde Rust con PyO3)_
@@ -144,7 +145,7 @@ flowchart
 > Basado en:
 > [_PyO3 user guide_](https://pyo3.rs/v0.26.0/index.html)
 
-# Bloque 5: Sistemas Embebidos y Críticos  
+# Bloque 5: Sistema Embebidos y Críticos  
 > _(Enfocado en bajo nivel, control de hardware, entornos sin sistema operativo, y aplicaciones de tiempo real.)_
 
 > Basado en:
