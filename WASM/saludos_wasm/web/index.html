@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Rust WASM con JavaScript Vanilla</title>
+    </head>
+    <body>
+        <h1>Usando Rust WASM</h1>
+
+        <!-- se crea el botón y se le asigna la función greet -->
+        <button onclick="greet()">Saludar</button>
+
+        <!-- aquí meteremos el retorno de la función -->
+        <p id="result"></p>
+
+        <!-- importación del módulo WASM -->
+        <script type="module" src="./index.js"></script>
+    </body>
+</html>

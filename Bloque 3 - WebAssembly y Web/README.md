@@ -1,6 +1,3 @@
-<!-- TODO hacer el tutorial del Hola Mundo! -->
-<!-- Se hará con javascript vanilla -->
-
 <!-- TODO agregar desarrollo web con vite + react integrando wasm -->
 <!-- es bueno, puedes verificar lo que había investigado en el repositorio de Rust -->
 
