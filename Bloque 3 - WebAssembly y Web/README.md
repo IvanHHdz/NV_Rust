@@ -11,8 +11,8 @@
 <!-- dicen que es un framework para frontend similar a react que optimiza con wasm -->
 
 Entonces, el índice quedaría más o menos:
-1. Introducción a WebAssembly
-   1. Hola Mundo con WebAssembly con JavaScript puro
+1. ~~Introducción a WebAssembly~~
+   1. ~~Hola Mundo con WebAssembly con JavaScript puro~~
 2. Integración de WebAssembly con Vite + React
    1. Tutorial para hacer el Juego de la Vida
    2. Implementación de algoritmos: Ordenamiento, Dijkstra y Machine Learning
