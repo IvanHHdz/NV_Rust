@@ -1,9 +1,3 @@
-<!-- TODO es necesario segmentar para incluir asincronía de std-->
-<!-- en vista que wasm no soporta bien tokyo ni threads, es necesario aprender asincronía con lo que provee la librería estándar de rust. es poco pero necesitaría incluirlo antes de meter a tokyo -->
-
-<!-- TODO pines -->
-<!-- en el libro asincrónico -->
-
 <!-- TODO stream -->
 <!-- en el libro asincrónico -->
 
