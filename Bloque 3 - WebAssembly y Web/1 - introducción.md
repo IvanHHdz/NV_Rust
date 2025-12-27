@@ -1,6 +1,6 @@
 # WebAssembly
 
-WebAssembly (abreviado como wasm) es un formato de código de bytes de bajo nivel que sirve como objetivo para compilar lenguajes de alto nivel como C, C++ y Rust. Su objetivo es permitir la ejecución de aplicaciones en la web y otras plataformas con una velocidad cercana a la nativa, ofreciendo un rendimiento y una versatilidad significativamente mejorados en comparación con tecnologías anteriores. 
+WebAssembly (abreviado como wasm) es un formato de código de bytes de bajo nivel que sirve para compilar lenguajes de alto nivel como C, C++ y Rust. Su objetivo es permitir la ejecución de aplicaciones en la web y otras plataformas con una velocidad cercana a la nativa, ofreciendo un rendimiento y una versatilidad significativamente mejorados en comparación con tecnologías anteriores. 
 
 Para lo que veremos en este curso, necesitaremos:
 - Rust (`rustup`, `rustc` y `cargo`)
@@ -35,7 +35,6 @@ use web_sys;
 pub fn greet() -> String {
     web_sys::console::log_1(&"¡Hola, mundo desde WebAssembly!".into());
     format!("¡Hola, mundo desde WebAssembly!")
-}
 }
 ```
 Esta función imprimirá en la consola del navegador `"¡Hola, mundo desde WebAssembly!"`, además de retornarlo como cadena de texto al llamarla.
